@@ -1,0 +1,14 @@
+#summary A page containing all the screenshots.
+#labels Featured
+
+== Vimeo ==
+
+[http://pidgin-embedded-video.googlecode.com/svn/wiki/screenshots/vimeo.png]
+
+== Youtube ==
+
+[http://pidgin-embedded-video.googlecode.com/svn/wiki/screenshots/youtube.png]
+
+== Configuration ==
+
+[http://pidgin-embedded-video.googlecode.com/svn/wiki/screenshots/configuration.png]
