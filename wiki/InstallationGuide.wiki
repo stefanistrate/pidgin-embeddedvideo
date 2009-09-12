@@ -16,18 +16,15 @@ You will need these packages to be installed before compiling the plugin on your
   * libxml2-dev
   * libwebkit-dev >= 1.1.12
 
-If you don't find the right version in the repository (_System > Administration > Synaptic Package Manager_) for the libwebkit-dev package, you may take a look on [https://launchpad.net/~webkit-team/+archive/ppa this]. Or, if you have Ubuntu as OS, follow the next steps...
+If you don't find the right version in the repository for the libwebkit-dev package, you may take a look on [https://launchpad.net/~webkit-team/+archive/ppa this]. They will tell you how to install it on your Ubuntu machine in just a few steps:
 
-  * On your Ubuntu computer, open _System > Administration > Software Sources_. 
-  * Click the _Third Party Software_ tab.
+  * Open _System > Administration > Software Sources_. 
+  * Click on the _Third-Party Software_ tab.
 https://launchpad.net/+help/soyuz/images/software-sources-3rdparty-tab.png
-  * Click the _Add_ button.
-  * Paste the lines below and click the _Add source_ button after every inserted line.
+  * Click on the _Add_ button.
+  * Paste the line below and click on the _Add Source_ button.
 {{{
-deb http://ppa.launchpad.net/webkit-team/build-dependencies/ubuntu hardy main 
-deb-src http://ppa.launchpad.net/webkit-team/build-dependencies/ubuntu hardy main
-deb http://ppa.launchpad.net/webkit-team/ppa/ubuntu YOUR_UBUNTU_VERSION main 
-deb-src http://ppa.launchpad.net/webkit-team/ppa/ubuntu YOUR_UBUNTU_VERSION main
+deb http://ppa.launchpad.net/webkit-team/ppa/ubuntu YOUR_UBUNTU_VERSION main
 }}}
 where {{{ YOUR_UBUNTU_VERSION }}} is {{{ karmic }}} for Karmic (9.10), {{{ jaunty }}} for Jaunty (9.04), {{{ intrepid }}} for Intrepid (8.10), {{{ hardy }}} for Hardy (8.04).
   * Write in a terminal...
@@ -35,7 +32,7 @@ where {{{ YOUR_UBUNTU_VERSION }}} is {{{ karmic }}} for Karmic (9.10), {{{ jaunt
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 2D9A3C5B
 sudo apt-get update
 }}}
-  * Open _System > Administration > Synaptic Package Manager_, press the _Reload_ button and install the libwebkit-dev package.
+  * Open _System > Administration > Synaptic Package Manager_, press the _Reload_ button and install the latest version of the libwebkit-dev package.
 
 === Compilation ===
 
