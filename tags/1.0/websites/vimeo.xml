@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<website>
+    <id>vimeo</id>
+    <regex>^(?i)(?&lt;http&gt;http://)?(?(&lt;http&gt;)(www\.)?|(www\.))vimeo\.com/(?&lt;video_id&gt;\d+)([/?#].*)?$</regex>
+    <embed>&lt;object width=&quot;400&quot; height=&quot;300&quot;&gt;
+&lt;param name=&quot;allowfullscreen&quot; value=&quot;true&quot; /&gt;
+&lt;param name=&quot;allowscriptaccess&quot; value=&quot;always&quot; /&gt;
+&lt;param name=&quot;movie&quot; value=&quot;http://vimeo.com/moogaloop.swf?clip_id=%VIDEO_ID%&amp;amp;server=vimeo.com&amp;amp;show_title=1&amp;amp;show_byline=0&amp;amp;show_portrait=0&amp;amp;fullscreen=1&quot; /&gt;
+&lt;embed src=&quot;http://vimeo.com/moogaloop.swf?clip_id=%VIDEO_ID%&amp;amp;server=vimeo.com&amp;amp;show_title=1&amp;amp;show_byline=0&amp;amp;show_portrait=0&amp;amp;fullscreen=1&quot; type=&quot;application/x-shockwave-flash&quot; allowfullscreen=&quot;true&quot; allowscriptaccess=&quot;always&quot; width=&quot;400&quot; height=&quot;300&quot;&gt;&lt;/embed&gt;
+&lt;/object&gt;</embed>
+</website>
