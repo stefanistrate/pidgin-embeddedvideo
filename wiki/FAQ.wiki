@@ -3,7 +3,7 @@
 
 === I like it! What's the story? ===
 
-Pidgin Video is the first plugin we have written. It all began in the summer of 2009 when the idea for this plugin had caught our fancy. We developed it in our spare time. Furthermore, as we read some documentation, we realized that it isn't so hard to do it. We like to work on it and as far as there are new improvements to be done, we will dedicate enough time. We hope you will enjoy it!
+Pidgin Embedded Video is the first plugin we have written. It all began in the summer of 2009 when the idea for this plugin had caught our fancy. We developed it in our spare time. Furthermore, as we read some documentation, we realized that it isn't so hard to do it. We like to work on it and as far as there are new improvements to be done, we will dedicate enough time. We hope you will enjoy it!
 
 We are open to new ideas and ready to get things better! Whether you have an idea of improving this project or something new and you think we can help you, feel free to contact us!
 
