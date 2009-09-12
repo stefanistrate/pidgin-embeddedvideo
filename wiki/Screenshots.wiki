@@ -3,12 +3,12 @@
 
 == Vimeo ==
 
-[http://pidgin-embedded-video.googlecode.com/svn/wiki/screenshots/vimeo.png]
+[http://pidgin-embeddedvideo.googlecode.com/svn/wiki/screenshots/vimeo.png]
 
 == Youtube ==
 
-[http://pidgin-embedded-video.googlecode.com/svn/wiki/screenshots/youtube.png]
+[http://pidgin-embeddedvideo.googlecode.com/svn/wiki/screenshots/youtube.png]
 
 == Configuration ==
 
-[http://pidgin-embedded-video.googlecode.com/svn/wiki/screenshots/configuration.png]
+[http://pidgin-embeddedvideo.googlecode.com/svn/wiki/screenshots/configuration.png]
