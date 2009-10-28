@@ -13,7 +13,6 @@
 # PARTICULAR PURPOSE.
 
 @SET_MAKE@
-
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
 pkglibdir = $(libdir)/@PACKAGE@
@@ -33,7 +32,7 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 target_triplet = @target@
-subdir = websites
+subdir = src/websites
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -43,15 +42,6 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 SOURCES =
 DIST_SOURCES =
-am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
-am__vpath_adj = case $$p in \
-    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
-    *) f=$$p;; \
-  esac;
-am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
-am__installdirs = "$(DESTDIR)$(websitesdir)"
-websitesDATA_INSTALL = $(INSTALL_DATA)
-DATA = $(websites_DATA)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
@@ -86,11 +76,11 @@ INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
+LIBCURL_CFLAGS = @LIBCURL_CFLAGS@
+LIBCURL_LIBS = @LIBCURL_LIBS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
-LIBXML_CFLAGS = @LIBXML_CFLAGS@
-LIBXML_LIBS = @LIBXML_LIBS@
 LIPO = @LIPO@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
@@ -177,13 +167,14 @@ target_vendor = @target_vendor@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-websitesdir = @PLUGINDIR@/embeddedvideo/websites
-websites_DATA = vimeo.xml \
-                youtube.xml
-
+PLUGIN_CFLAGS = @GLIB_CFLAGS@ @PIDGIN_CFLAGS@ @WEBKIT_CFLAGS@ @LIBCURL_CFLAGS@
+WEBSITES = trilulilu-audio.lo vimeo.lo youtube.lo
+WEBSITES_CFLAGS = $(PLUGIN_CFLAGS) -I..
+CLEANFILES = $(WEBSITES) libwebsites.la
 all: all-am
 
 .SUFFIXES:
+.SUFFIXES: .c .lo
 $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -193,9 +184,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  websites/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  src/websites/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  websites/Makefile
+	  $(AUTOMAKE) --gnu  src/websites/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -219,23 +210,6 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
-install-websitesDATA: $(websites_DATA)
-	@$(NORMAL_INSTALL)
-	test -z "$(websitesdir)" || $(MKDIR_P) "$(DESTDIR)$(websitesdir)"
-	@list='$(websites_DATA)'; for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  f=$(am__strip_dir) \
-	  echo " $(websitesDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(websitesdir)/$$f'"; \
-	  $(websitesDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(websitesdir)/$$f"; \
-	done
-
-uninstall-websitesDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(websites_DATA)'; for p in $$list; do \
-	  f=$(am__strip_dir) \
-	  echo " rm -f '$(DESTDIR)$(websitesdir)/$$f'"; \
-	  rm -f "$(DESTDIR)$(websitesdir)/$$f"; \
-	done
 tags: TAGS
 TAGS:
 
@@ -271,11 +245,8 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(DATA)
+all-am: Makefile
 installdirs:
-	for dir in "$(DESTDIR)$(websitesdir)"; do \
-	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
-	done
 install: install-am
 install-exec: install-exec-am
 install-data: install-data-am
@@ -293,6 +264,7 @@ install-strip:
 mostlyclean-generic:
 
 clean-generic:
+	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
@@ -318,7 +290,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-websitesDATA
+install-data-am:
 
 install-dvi: install-dvi-am
 
@@ -352,7 +324,7 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-websitesDATA
+uninstall-am:
 
 .MAKE: install-am install-strip
 
@@ -363,11 +335,16 @@ uninstall-am: uninstall-websitesDATA
 	install-exec install-exec-am install-html install-html-am \
 	install-info install-info-am install-man install-pdf \
 	install-pdf-am install-ps install-ps-am install-strip \
-	install-websitesDATA installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	uninstall uninstall-am uninstall-websitesDATA
+	installcheck installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-generic \
+	mostlyclean-libtool pdf pdf-am ps ps-am uninstall uninstall-am
 
+
+.c.lo:
+	$(LIBTOOL) --mode=compile $(CC) $(CFLAGS) -c $< -o $@ $(WEBSITES_CFLAGS)
+
+all: $(WEBSITES)
+	$(LIBTOOL) --mode=link $(CC) $(CFLAGS) -o libwebsites.la $(LIBS) $(LDFLAGS) $(WEBSITES)
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

@@ -100,7 +100,7 @@ static gboolean
 plugin_load(PurplePlugin *plugin)
 {
     /* Load websites rules. */
-    websites_init(plugin->path);
+    websites_init();
 
     /* Do some more initializations. */
     videoframes_init();
@@ -196,9 +196,9 @@ static PurplePluginInfo info = {
 
     PLUGIN_ID,
     "Pidgin Embedded Video",
-    "1.0",
+    "1.1",
     "Watch videos directly into the conversation.",
-    "This plugin provides you an easy way to watch videos from popular websites (Vimeo, Youtube) directly into the conversation. Send and receive links and the plugin will insert the video.",
+    "This plugin provides you an easy way to watch videos from popular websites (Trilulilu, Vimeo, Youtube) directly into the conversation. Send and receive links and the plugin will insert the video.",
     "Stefan Istrate <stefan.istrate@gmail.com>\nMarius Stroe <laurentiu.stroe@gmail.com>",
     "http://code.google.com/p/pidgin-embeddedvideo/",
 

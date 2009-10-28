@@ -1,5 +1,10 @@
-PLUGIN_CFLAGS = @GLIB_CFLAGS@ @LIBXML_CFLAGS@ @PIDGIN_CFLAGS@ @WEBKIT_CFLAGS@
-PLUGIN_LIBS = @GLIB_LIBS@ @LIBXML_LIBS@ @PIDGIN_LIBS@ @WEBKIT_LIBS@
+SUBDIRS = websites
+
+PLUGIN_CFLAGS = @GLIB_CFLAGS@ @PIDGIN_CFLAGS@ @WEBKIT_CFLAGS@ @LIBCURL_CFLAGS@
+PLUGIN_LIBS = @GLIB_LIBS@ @PIDGIN_LIBS@ @WEBKIT_LIBS@ @LIBCURL_LIBS@
+
+LIBS += -lwebsites
+LDFLAGS += -Lwebsites
 
 plugindir = @PLUGINDIR@
 plugin_DATA = embeddedvideo.so
@@ -16,3 +21,6 @@ embeddedvideo.so: embeddedvideo.c $(OBJECTS)
 	@rm -f tmp$@.lo tmp$@.o libtmp$@.la
 	@cp .libs/libtmp$@.so* $@
 	@rm -f .libs/libtmp$@.* .libs/tmp$@.*
+
+all: embeddedvideo.so
+

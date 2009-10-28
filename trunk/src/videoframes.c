@@ -190,14 +190,15 @@ videoframes_toggle_button(GtkWidget *button)
 gchar *
 videoframes_generate_page(WebsiteInfo *website, GString *url)
 {
+    GRegex *website_regex = g_regex_new(website->regex, 0, 0, NULL);
     GMatchInfo *match_info;
-    gboolean match_found = g_regex_match(website->regex, url->str, 0, &match_info);
+    gboolean match_found = g_regex_match(website_regex, url->str, 0, &match_info);
     g_assert(match_found);
 
     gchar *video_id = g_match_info_fetch_named(match_info, "video_id");
     GRegex *video_id_regex = g_regex_new("%VIDEO_ID%", 0, 0, NULL);
     gchar *embed = g_regex_replace_literal(video_id_regex,
-            website->embed->str, -1, 0,
+            website->embed, -1, 0,
             video_id,
             0,
             NULL);
@@ -210,12 +211,13 @@ videoframes_generate_page(WebsiteInfo *website, GString *url)
     close(file);
 
     purple_debug_info(PLUGIN_ID, "New video found: site = %s, id = %s.\n",
-            website->id->str, video_id);
+            website->id, video_id);
 
     g_free(embed);
     g_regex_unref(video_id_regex);
     g_free(video_id);
     g_match_info_free(match_info);
+    g_regex_unref(website_regex);
 
     gchar *ret = g_new(gchar, strlen(filename) + 9);
     g_stpcpy(g_stpcpy(ret, "file:///"), filename);
