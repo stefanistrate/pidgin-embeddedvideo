@@ -8,18 +8,14 @@ typedef struct _WebsiteInfo WebsiteInfo;
 
 struct _WebsiteInfo
 {
-    GString *id;
-    GRegex  *regex;
-    GString *embed;
+    char *id;
+    char *regex;
+    char *embed;
+    int (*check)(gchar *const);
 };
 
-WebsiteInfo *   website_info_new(gpointer, gpointer, gpointer);
-void            website_info_free(gpointer, gpointer);
-
-void            websites_init(char *);
+void            websites_init();
 void            websites_destroy();
-WebsiteInfo *   websites_find_match(gchar *, gint);
-
-WebsiteInfo *   extractXmlData(gchar *);
+WebsiteInfo *   websites_find_match(gchar *const, gint);
 
 #endif

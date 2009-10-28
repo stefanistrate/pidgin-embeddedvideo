@@ -1,7 +1,7 @@
 # Process this file with autoconf to produce a configure script.
 AC_PREREQ([2.50])
 
-AC_INIT([pidgin-embeddedvideo], [1.0])
+AC_INIT([pidgin-embeddedvideo], [1.1])
 AC_CANONICAL_SYSTEM
 
 AM_INIT_AUTOMAKE
@@ -26,11 +26,6 @@ PKG_CHECK_MODULES(GLIB, glib-2.0)
 AC_SUBST(GLIB_CFLAGS)
 AC_SUBST(GLIB_LIBS)
 
-# Check for libxml2.
-PKG_CHECK_MODULES(LIBXML, libxml-2.0)
-AC_SUBST(LIBXML_CFLAGS)
-AC_SUBST(LIBXML_LIBS)
-
 # Check for Pidgin.
 PKG_CHECK_MODULES(PIDGIN, pidgin purple)
 
@@ -47,8 +42,13 @@ PKG_CHECK_MODULES(WEBKIT, [webkit-1.0 >= 1.1.12])
 AC_SUBST(WEBKIT_CFLAGS)
 AC_SUBST(WEBKIT_LIBS)
 
+# Check for libcurl.
+PKG_CHECK_MODULES(LIBCURL, libcurl)
+AC_SUBST(LIBCURL_CFLAGS)
+AC_SUBST(LIBCURL_LIBS)
+
 # Finish up.
 AC_CONFIG_FILES([Makefile
                  src/Makefile
-                 websites/Makefile])
+                 src/websites/Makefile])
 AC_OUTPUT
