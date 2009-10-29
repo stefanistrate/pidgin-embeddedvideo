@@ -3,9 +3,6 @@
 #include <glib.h>
 #include <curl/curl.h>
 
-#include <debug.h>
-#include <config.h>
-
 static GString *buffer;
 
 static int check(gchar *const);
@@ -23,25 +20,24 @@ WebsiteInfo trilulilu_audio = {
     &check
 };
 
-size_t save_downloaded_content(gchar *t_buffer, size_t size, size_t nmemb, void *stream)
+size_t save_downloaded_content(gchar *buf, size_t size, size_t nmemb, void *stream)
 {
-    g_string_append_len(buffer, t_buffer, nmemb);
+    g_string_append_len(buffer, buf, nmemb);
     return nmemb;
 }
 
-static int check(gchar *const link)
+int check(gchar *const link)
 {
     CURL *curl;
     CURLcode curl_res;
 
-    buffer = g_string_sized_new(1 << 18);
+    buffer = g_string_sized_new(32768);
 
     curl = curl_easy_init();
     if (curl) {
         curl_easy_setopt(curl, CURLOPT_URL, link);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, save_downloaded_content);
         curl_res = curl_easy_perform(curl);
-
         curl_easy_cleanup(curl);
 
         if (curl_res == CURLE_OK) {
@@ -50,5 +46,6 @@ static int check(gchar *const link)
                 return 1;
         }
     }
+
     return 0;
 }

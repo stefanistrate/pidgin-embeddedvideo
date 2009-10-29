@@ -22,7 +22,7 @@ static GHashTable *ht_button_info = NULL;   /* <button, button_info> */
 
 ButtonInfo *
 button_info_new(GtkIMHtml *imhtml, GtkTextIter *location,
-       WebsiteInfo *website, gchar *text, gint len, gboolean is_end)
+        WebsiteInfo *website, gchar *text, gint len, gboolean is_end)
 {
     ButtonInfo *info = g_new(ButtonInfo, 1);
 
