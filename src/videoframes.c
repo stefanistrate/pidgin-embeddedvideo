@@ -22,7 +22,7 @@ static GHashTable *ht_button_info = NULL;   /* <button, button_info> */
 
 ButtonInfo *
 button_info_new(GtkIMHtml *imhtml, GtkTextIter *location,
-        WebsiteInfo *website, gchar *text, gint len)
+       WebsiteInfo *website, gchar *text, gint len, gboolean is_end)
 {
     ButtonInfo *info = g_new(ButtonInfo, 1);
 
@@ -31,6 +31,7 @@ button_info_new(GtkIMHtml *imhtml, GtkTextIter *location,
             location, TRUE);
     info->website = website;
     info->url = g_string_new_len(text, len);
+    info->is_end = is_end;
 
     return info;
 }
@@ -85,7 +86,7 @@ videoframes_insert_new_button(GtkIMHtml *imhtml, GtkTextIter *location,
 
     /* Add some information to the button. */
     g_hash_table_insert(ht_button_info, button,
-            button_info_new(imhtml, location, website, text, len));
+            button_info_new(imhtml, location, website, text, len, gtk_text_iter_is_end(location)));
 
     /* Insert the button into the conversation. */
     GtkTextChildAnchor *anchor = gtk_text_buffer_create_child_anchor(
@@ -153,7 +154,8 @@ videoframes_toggle_button_cb(GtkWidget *button)
         GtkTextChildAnchor *anchor = gtk_text_buffer_create_child_anchor(
                 info->imhtml->text_buffer, &iter);
         gtk_text_view_add_child_at_anchor(&info->imhtml->text_view, web_view, anchor);
-        gtk_text_buffer_insert(info->imhtml->text_buffer, &iter, "\n", 1);
+        if (info->is_end == FALSE)
+            gtk_text_buffer_insert(info->imhtml->text_buffer, &iter, "\n", 1);
 
     } else {
 
@@ -163,7 +165,10 @@ videoframes_toggle_button_cb(GtkWidget *button)
         /* Remove the video from the conversation.
            The web view is implicitly destroyed. */
         GtkTextIter next_iter = iter;
-        gtk_text_iter_forward_chars(&next_iter, 3);
+        if (info->is_end)
+            gtk_text_iter_forward_chars(&next_iter, 2);
+        else
+            gtk_text_iter_forward_chars(&next_iter, 3);
         gtk_text_buffer_delete(info->imhtml->text_buffer, &iter, &next_iter);
 
     }
