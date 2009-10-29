@@ -1,6 +1,6 @@
 PLUGIN_CFLAGS = @GLIB_CFLAGS@ @PIDGIN_CFLAGS@ @WEBKIT_CFLAGS@ @LIBCURL_CFLAGS@
 
-WEBSITES = trilulilu-audio.lo vimeo.lo youtube.lo
+WEBSITES = trilulilu-video.lo trilulilu-audio.lo vimeo.lo youtube.lo
 WEBSITES_CFLAGS = $(PLUGIN_CFLAGS) -I..
 
 CLEANFILES = $(WEBSITES) libwebsites.la

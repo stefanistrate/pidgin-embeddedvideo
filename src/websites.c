@@ -11,13 +11,17 @@ void
 websites_init()
 {
     /* Extern declarations. */
-    extern WebsiteInfo  trilulilu_audio,
+    extern WebsiteInfo  trilulilu_image,
+                        trilulilu_audio,
+                        trilulilu_video,
                         vimeo,
                         youtube;
 
     /* Initialize the websites list. */
     list = NULL;
+    list = g_list_append(list, &trilulilu_image);
     list = g_list_append(list, &trilulilu_audio);
+    list = g_list_append(list, &trilulilu_video);
     list = g_list_append(list, &vimeo);
     list = g_list_append(list, &youtube);
 }
