@@ -15,7 +15,7 @@ CLEANFILES = embeddedvideo.so $(OBJECTS)
 .c.lo:
 	$(LIBTOOL) --mode=compile $(CC) $(CFLAGS) -c $< -o $@ $(PLUGIN_CFLAGS)
 
-embeddedvideo.so: embeddedvideo.c $(OBJECTS)
+embeddedvideo.so: embeddedvideo.c $(OBJECTS) websites/libwebsites.la
 	$(LIBTOOL) --mode=compile $(CC) $(CFLAGS) -c embeddedvideo.c -o tmp$@.lo $(PLUGIN_CFLAGS)
 	$(LIBTOOL) --mode=link    $(CC) $(CFLAGS) -o libtmp$@.la -rpath $(plugindir) tmp$@.lo $(LIBS) $(LDFLAGS) $(OBJECTS) -module -avoid-version $(PLUGIN_LIBS)
 	@rm -f tmp$@.lo tmp$@.o libtmp$@.la
