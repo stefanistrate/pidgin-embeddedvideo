@@ -28,10 +28,11 @@ size_t save_downloaded_content(gchar *buf, size_t size, size_t nmemb, void *stre
 
 int check(gchar *const link)
 {
+    int valid = 0;
     CURL *curl;
     CURLcode curl_res;
 
-    buffer = g_string_sized_new(32768);
+    buffer = g_string_sized_new(65536);
 
     curl = curl_easy_init();
     if (curl) {
@@ -43,9 +44,11 @@ int check(gchar *const link)
         if (curl_res == CURLE_OK) {
             if (g_regex_match_simple("var\\ current_file\\ =\\ \\{.*\"mimetype\":\"image\".*\\}",
                         buffer->str, 0, 0))
-                return 1;
+                valid = 1;
         }
     }
 
-    return 0;
+    g_string_free(buffer, FALSE);
+
+    return valid;
 }
