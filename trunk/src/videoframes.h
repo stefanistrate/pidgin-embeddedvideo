@@ -17,11 +17,10 @@ struct _ButtonInfo
     GtkTextMark *mark;
     WebsiteInfo *website;
     GString     *url;
-    gboolean     is_end;
 };
 
 ButtonInfo * button_info_new(GtkIMHtml *, GtkTextIter *,
-        WebsiteInfo *, gchar *, gint, gboolean);
+        WebsiteInfo *, gchar *, gint);
 void         button_info_free(ButtonInfo *);
 
 void         videoframes_init();
