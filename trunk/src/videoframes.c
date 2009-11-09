@@ -17,6 +17,10 @@ static gboolean new_window_policy_decision_requested_cb(WebKitWebView *,
         WebKitWebFrame *, WebKitNetworkRequest *,
         WebKitWebNavigationAction *, WebKitWebPolicyDecision *,
         gpointer);
+static gboolean navigation_policy_decision_requested_cb(WebKitWebView *,
+        WebKitWebFrame *, WebKitNetworkRequest *,
+        WebKitWebNavigationAction *, WebKitWebPolicyDecision *,
+        gpointer);
 
 static GHashTable *ht_button_info = NULL;   /* <button, button_info> */
 
@@ -146,6 +150,8 @@ videoframes_toggle_button_cb(GtkWidget *button)
 
         g_signal_connect(web_view, "new-window-policy-decision-requested",
                 G_CALLBACK(new_window_policy_decision_requested_cb), NULL);
+        g_signal_connect(web_view, "navigation-policy-decision-requested",
+                G_CALLBACK(navigation_policy_decision_requested_cb), NULL);
         gtk_widget_show_all(web_view);
 
         /* Insert the web view into the conversation. */
@@ -179,6 +185,16 @@ static gboolean new_window_policy_decision_requested_cb(WebKitWebView *web_view,
     return TRUE;
 }
 
+static gboolean navigation_policy_decision_requested_cb(WebKitWebView *web_view,
+        WebKitWebFrame *frame, WebKitNetworkRequest *request,
+        WebKitWebNavigationAction *navigation_action, WebKitWebPolicyDecision *policy_decision,
+        gpointer user_data)
+{
+    const gchar *uri = webkit_network_request_get_uri(request);
+    purple_notify_uri(NULL, uri);
+    return TRUE;
+}
+
 void
 videoframes_toggle_button(GtkWidget *button)
 {
@@ -196,12 +212,37 @@ videoframes_generate_page(WebsiteInfo *website, GString *url)
     g_assert(match_found);
 
     gchar *video_id = g_match_info_fetch_named(match_info, "video_id");
+    gchar *misc1 = g_match_info_fetch_named(match_info, "misc1");
+    gchar *misc2 = g_match_info_fetch_named(match_info, "misc2");
     GRegex *video_id_regex = g_regex_new("%VIDEO_ID%", 0, 0, NULL);
-    gchar *embed = g_regex_replace_literal(video_id_regex,
+    GRegex *misc1_regex = g_regex_new("%MISC1%", 0, 0, NULL);
+    GRegex *misc2_regex = g_regex_new("%MISC2%", 0, 0, NULL);
+
+    gchar *embed, *tmp_embed;
+    embed = g_regex_replace_literal(video_id_regex,
             website->embed, -1, 0,
             video_id,
             0,
             NULL);
+    if (misc1 != NULL && g_strcmp0(misc1, "") != 0) {
+        tmp_embed = embed;
+        embed = g_regex_replace_literal(misc1_regex,
+                tmp_embed, -1, 0,
+                misc1,
+                0,
+                NULL);
+        g_free(tmp_embed);
+
+        if (misc2 != NULL && g_strcmp0(misc2, "") != 0) {
+            tmp_embed = embed;
+            embed = g_regex_replace_literal(misc2_regex,
+                    tmp_embed, -1, 0,
+                    misc2,
+                    0,
+                    NULL);
+            g_free(tmp_embed);
+        }
+    }
 
     gchar *filename;
     gint file = g_file_open_tmp(NULL, &filename, NULL);
@@ -214,8 +255,14 @@ videoframes_generate_page(WebsiteInfo *website, GString *url)
             website->id, video_id);
 
     g_free(embed);
+
     g_regex_unref(video_id_regex);
+    g_regex_unref(misc1_regex);
+    g_regex_unref(misc2_regex);
     g_free(video_id);
+    g_free(misc1);
+    g_free(misc2);
+
     g_match_info_free(match_info);
     g_regex_unref(website_regex);
 
