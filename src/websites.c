@@ -11,7 +11,9 @@ void
 websites_init()
 {
     /* Extern declarations. */
-    extern WebsiteInfo  trilulilu_audio,
+    extern WebsiteInfo  collegehumor,
+                        dailymotion,
+                        trilulilu_audio,
                         trilulilu_image,
                         trilulilu_video,
                         vimeo,
@@ -19,6 +21,8 @@ websites_init()
 
     /* Initialize the websites list. */
     list = NULL;
+    list = g_list_append(list, &collegehumor);
+    list = g_list_append(list, &dailymotion);
     list = g_list_append(list, &trilulilu_audio);
     list = g_list_append(list, &trilulilu_image);
     list = g_list_append(list, &trilulilu_video);
