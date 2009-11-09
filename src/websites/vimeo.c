@@ -2,7 +2,7 @@
 
 WebsiteInfo vimeo = {
     "vimeo",
-    "^(?i)(?<http>http://)?(?(<http>)(www\\.)?|(www\\.))vimeo\\.com/(?<video_id>\\d+)([/?#].*)?$",
+    "^(?i)(?<http>http://)?(?(<http>)(www\\.)?|(www\\.))vimeo\\.com/(?<video_id>\\d+)([/\\?#].*)?$",
     "<object width=\"400\" height=\"300\">"
         "<param name=\"allowfullscreen\" value=\"true\" />"
         "<param name=\"allowscriptaccess\" value=\"always\" />"

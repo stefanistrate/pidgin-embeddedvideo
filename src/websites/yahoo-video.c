@@ -2,7 +2,7 @@
 
 WebsiteInfo yahoo_video = {
     "yahoo-video",
-    "^(?i)(http://)?video\\.yahoo\\.com/watch/(?-i)(?<video_id>\\d+)/(?<misc1>[\\w\\d]+)([/?#].*)?$",
+    "^(?i)(http://)?video\\.yahoo\\.com/watch/(?-i)(?<video_id>\\d+)/(?<misc1>[\\w\\d]+)([/\\?#].*)?$",
     "<object width=\"425\" height=\"320\">"
         "<param name=\"movie\" value=\"http://d.yimg.com/static.video.yahoo.com/yep/YV_YEP.swf?ver=2.2.46\" />"
         "<param name=\"allowFullScreen\" value=\"true\" />"
