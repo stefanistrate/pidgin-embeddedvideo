@@ -2,6 +2,8 @@ PLUGIN_CFLAGS = @GLIB_CFLAGS@ @PIDGIN_CFLAGS@ @WEBKIT_CFLAGS@ @LIBCURL_CFLAGS@
 
 WEBSITES =  collegehumor.lo \
             dailymotion.lo \
+            google-video.lo \
+            metacafe.lo \
             myspace-video.lo \
             trilulilu-audio.lo \
             trilulilu-image.lo \

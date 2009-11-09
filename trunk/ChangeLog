@@ -1,6 +1,12 @@
 Pidgin Embedded Video:
 The easiest way to watch videos while chatting with your friends.
 
+version 1.1 (11/09/2009):
+	* Completely changed the structure of the plugin and the compilation
+	  process to generate a single file (embeddedvideo.so).
+	* Added support for CollegeHumor, Dailymotion, Google Video, Metacafe,
+	  MySpace Video, Trilulilu (audio, image and video) and Yahoo! Video.
+
 version 1.0 (09/12/2009):
 	* The plugin automatically inserts the video pointed to into the
 	  conversation when an appropriate link is sent or received.
