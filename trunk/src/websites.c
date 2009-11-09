@@ -13,6 +13,7 @@ websites_init()
     /* Extern declarations. */
     extern WebsiteInfo  collegehumor,
                         dailymotion,
+                        myspace_video,
                         trilulilu_audio,
                         trilulilu_image,
                         trilulilu_video,
@@ -24,6 +25,7 @@ websites_init()
     list = NULL;
     list = g_list_append(list, &collegehumor);
     list = g_list_append(list, &dailymotion);
+    list = g_list_append(list, &myspace_video);
     list = g_list_append(list, &trilulilu_audio);
     list = g_list_append(list, &trilulilu_image);
     list = g_list_append(list, &trilulilu_video);

@@ -10,7 +10,7 @@ static size_t save_downloaded_content(gchar *, size_t, size_t, void *);
 
 WebsiteInfo trilulilu_image = {
     "trilulilu-image",
-    "^(?i)(?<http>http://)?(?(<http>)(www\\.)?|(www\\.))trilulilu\\.ro/(?-i)(?<misc1>[\\w\\d]+)/(?<video_id>[\\w\\d]{14})([/?#].*)?$",
+    "^(?i)(?<http>http://)?(?(<http>)(www\\.)?|(www\\.))trilulilu\\.ro/(?-i)(?<misc1>[\\w\\d]+)/(?<video_id>[\\w\\d]{14})([/\\?#].*)?$",
     "<object width=\"425\" height=\"344\">"
         "<param name=\"movie\" value=\"http://embed.trilulilu.ro/image/%MISC1%/%VIDEO_ID%.swf\"></param>"
         "<param name=\"allowFullScreen\" value=\"true\"></param>"
