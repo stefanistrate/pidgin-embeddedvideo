@@ -17,6 +17,7 @@ websites_init()
                         trilulilu_image,
                         trilulilu_video,
                         vimeo,
+                        yahoo_video,
                         youtube;
 
     /* Initialize the websites list. */
@@ -27,6 +28,7 @@ websites_init()
     list = g_list_append(list, &trilulilu_image);
     list = g_list_append(list, &trilulilu_video);
     list = g_list_append(list, &vimeo);
+    list = g_list_append(list, &yahoo_video);
     list = g_list_append(list, &youtube);
 }
 

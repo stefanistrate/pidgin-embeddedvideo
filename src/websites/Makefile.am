@@ -6,6 +6,7 @@ WEBSITES =  collegehumor.lo \
             trilulilu-image.lo \
             trilulilu-video.lo \
             vimeo.lo \
+            yahoo-video.lo \
             youtube.lo
 WEBSITES_CFLAGS = $(PLUGIN_CFLAGS) -I..
 
