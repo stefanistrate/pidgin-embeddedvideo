@@ -17,7 +17,8 @@
 #include <debug.h>
 
 static GHashTable *ht_buttons = NULL;           /* <button, imhtml> */
-static GHashTable *ht_signal_handlers = NULL;   /* <text_buffer, handler_id> */
+static GHashTable *ht_signal_handlers_it = NULL;   /* <text_buffer, "insert-text"> */
+static GHashTable *ht_signal_handlers_eua = NULL;	/* <text_buffer, "end-user-action"> */
 
 static void
 insert_text_cb(GtkTextBuffer *textbuffer, GtkTextIter *location,
@@ -37,9 +38,6 @@ insert_text_cb(GtkTextBuffer *textbuffer, GtkTextIter *location,
         GtkWidget *button = videoframes_insert_new_button(imhtml, location, info, text, len);
         g_hash_table_insert(ht_buttons, button, imhtml);
 
-        if (purple_prefs_get_bool("/plugins/gtk/embeddedvideo/show-video"))
-            videoframes_toggle_button(button);
-
         gtk_text_buffer_get_end_iter(imhtml->text_buffer, location);
 
     }
@@ -54,9 +52,13 @@ attach_to_conversation(gpointer data, gpointer user_data)
     GtkIMHtml *imhtml = GTK_IMHTML(gtkconv->imhtml);
     g_assert(GTK_IS_IMHTML(imhtml));
 
-    gulong handler_id = g_signal_connect_after(G_OBJECT(imhtml->text_buffer),
+    gulong it_handler_id = g_signal_connect_after(G_OBJECT(imhtml->text_buffer),
             "insert-text", G_CALLBACK(insert_text_cb), imhtml);
-    g_hash_table_insert(ht_signal_handlers, imhtml->text_buffer, (gpointer) handler_id);
+    g_hash_table_insert(ht_signal_handlers_it, imhtml->text_buffer, (gpointer) it_handler_id);
+
+    gulong eua_handler_id = g_signal_connect(G_OBJECT(imhtml->text_buffer),
+            "end-user-action", G_CALLBACK(videoframes_text_buffer_end_user_action_cb), NULL);
+    g_hash_table_insert(ht_signal_handlers_eua, imhtml->text_buffer, (gpointer) eua_handler_id);
 }
 
 static void
@@ -68,10 +70,15 @@ detach_from_conversation(gpointer data, gpointer user_data)
     GtkIMHtml *imhtml = GTK_IMHTML(gtkconv->imhtml);
     g_assert(GTK_IS_IMHTML(imhtml));
 
-    gulong handler_id = (gulong) g_hash_table_lookup(ht_signal_handlers,
+    gulong it_handler_id = (gulong) g_hash_table_lookup(ht_signal_handlers_it,
             imhtml->text_buffer);
-    g_signal_handler_disconnect(imhtml->text_buffer, handler_id);
-    g_hash_table_remove(ht_signal_handlers, imhtml->text_buffer);
+    g_signal_handler_disconnect(imhtml->text_buffer, it_handler_id);
+    g_hash_table_remove(ht_signal_handlers_it, imhtml->text_buffer);
+
+    gulong eua_handler_id = (gulong) g_hash_table_lookup(ht_signal_handlers_eua,
+            imhtml->text_buffer);
+    g_signal_handler_disconnect(imhtml->text_buffer, eua_handler_id);
+    g_hash_table_remove(ht_signal_handlers_eua, imhtml->text_buffer);
 }
 
 static void
@@ -109,8 +116,9 @@ plugin_load(PurplePlugin *plugin)
     ht_buttons = g_hash_table_new_full(g_direct_hash, g_direct_equal,
             (GDestroyNotify) videoframes_remove_button, NULL);
 
-    /* Create the hash table for signal handlers. */
-    ht_signal_handlers = g_hash_table_new(g_direct_hash, g_direct_equal);
+    /* Create hash tables for signal handlers. */
+    ht_signal_handlers_it = g_hash_table_new(g_direct_hash, g_direct_equal);
+    ht_signal_handlers_eua = g_hash_table_new(g_direct_hash, g_direct_equal);
 
     /* Attach to current conversations. */
     g_list_foreach(purple_get_conversations(), attach_to_conversation, NULL);
@@ -130,16 +138,17 @@ plugin_unload(PurplePlugin *plugin)
 {
     /* Disconnect signals for future conversations. */
     void *conv_handle = purple_conversations_get_handle();
-    purple_signal_disconnect(conv_handle, "conversation-created", plugin,
-            PURPLE_CALLBACK(conversation_created_cb));
     purple_signal_disconnect(conv_handle, "deleting-conversation", plugin,
             PURPLE_CALLBACK(deleting_conversation_cb));
+    purple_signal_disconnect(conv_handle, "conversation-created", plugin,
+            PURPLE_CALLBACK(conversation_created_cb));
 
     /* Detach from current conversations. */
     g_list_foreach(purple_get_conversations(), detach_from_conversation, NULL);
 
-    /* Destroy the hash table for signal handlers. */
-    g_hash_table_destroy(ht_signal_handlers);
+    /* Destroy hash tables for signal handlers. */
+    g_hash_table_destroy(ht_signal_handlers_eua);
+    g_hash_table_destroy(ht_signal_handlers_it);
 
     /* Remove all the inserted buttons and destroy the hash table.
        Every button will automatically remove its video frame if it has one. */

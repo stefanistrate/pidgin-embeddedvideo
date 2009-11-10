@@ -17,6 +17,8 @@ struct _ButtonInfo
     GtkTextMark *mark;
     WebsiteInfo *website;
     GString     *url;
+    GtkTextIter *iter;
+    gint         insert_newline;
 };
 
 ButtonInfo * button_info_new(GtkIMHtml *, GtkTextIter *,
@@ -25,6 +27,8 @@ void         button_info_free(ButtonInfo *);
 
 void         videoframes_init();
 void         videoframes_destroy();
+void         videoframes_text_buffer_check_new_line(gpointer, gpointer, gpointer);
+void         videoframes_text_buffer_end_user_action_cb(GtkTextBuffer *, gpointer);
 GtkWidget *  videoframes_insert_new_button(GtkIMHtml *, GtkTextIter *,
         WebsiteInfo *, gchar *, gint);
 void         videoframes_remove_button(GtkWidget *);

@@ -35,6 +35,8 @@ button_info_new(GtkIMHtml *imhtml, GtkTextIter *location,
             location, TRUE);
     info->website = website;
     info->url = g_string_new_len(text, len);
+    info->iter = location;
+    info->insert_newline = -1;
 
     return info;
 }
@@ -58,6 +60,44 @@ void
 videoframes_destroy()
 {
     g_hash_table_destroy(ht_button_info);
+}
+
+void
+videoframes_text_buffer_check_newline(gpointer key, gpointer values, gpointer user_data)
+{
+    GtkWidget *button = (GtkWidget *) key;
+    ButtonInfo *button_info = (ButtonInfo *) values;
+
+    if (button_info->insert_newline != -1)
+        return ;
+
+    GtkTextIter iter;
+
+    gtk_text_buffer_get_iter_at_mark(button_info->imhtml->text_buffer,
+            &iter, button_info->mark);
+	button_info->insert_newline = 0;
+
+    while (gtk_text_iter_forward_char(&iter)) {
+        gunichar crt_unichar = gtk_text_iter_get_char(&iter);
+
+        if (crt_unichar == G_UNICODE_BREAK_LINE_FEED)
+            break ;
+        if (g_unichar_isgraph(crt_unichar)) {
+            button_info->insert_newline = 1;
+            break ;
+        }
+    }
+
+    if (purple_prefs_get_bool("/plugins/gtk/embeddedvideo/show-video")) {
+        videoframes_toggle_button(button);
+        gtk_text_buffer_get_end_iter(button_info->imhtml->text_buffer, button_info->iter);
+    }
+}
+
+void
+videoframes_text_buffer_end_user_action_cb(GtkTextBuffer* text_buffer, gpointer user_data)
+{
+    g_hash_table_foreach(ht_button_info, videoframes_text_buffer_check_newline, NULL);
 }
 
 GtkWidget *
@@ -155,11 +195,15 @@ videoframes_toggle_button_cb(GtkWidget *button)
         gtk_widget_show_all(web_view);
 
         /* Insert the web view into the conversation. */
+        /* FIXME: Is this "\n" enough? What about those who use unicode chars?
+           What could happen on Windows without "\r"?
+        */
         gtk_text_buffer_insert(info->imhtml->text_buffer, &iter, "\n", 1);
         GtkTextChildAnchor *anchor = gtk_text_buffer_create_child_anchor(
                 info->imhtml->text_buffer, &iter);
         gtk_text_view_add_child_at_anchor(&info->imhtml->text_view, web_view, anchor);
-        gtk_text_buffer_insert(info->imhtml->text_buffer, &iter, "\n", 1);
+        if (info->insert_newline == 1)
+            gtk_text_buffer_insert(info->imhtml->text_buffer, &iter, "\n", 1);
 
     } else {
 
@@ -169,7 +213,7 @@ videoframes_toggle_button_cb(GtkWidget *button)
         /* Remove the video from the conversation.
            The web view is implicitly destroyed. */
         GtkTextIter next_iter = iter;
-        gtk_text_iter_forward_chars(&next_iter, 3);
+        gtk_text_iter_forward_chars(&next_iter, 2 + (info->insert_newline));
         gtk_text_buffer_delete(info->imhtml->text_buffer, &iter, &next_iter);
 
     }
