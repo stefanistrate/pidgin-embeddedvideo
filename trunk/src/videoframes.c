@@ -22,7 +22,8 @@ static gboolean navigation_policy_decision_requested_cb(WebKitWebView *,
         WebKitWebNavigationAction *, WebKitWebPolicyDecision *,
         gpointer);
 
-static GHashTable *ht_button_info = NULL;   /* <button, button_info> */
+static GHashTable *ht_button_info = NULL;       /* <button, button_info> */
+static GHashTable *ht_button_location = NULL;   /* <button, location> */
 
 ButtonInfo *
 button_info_new(GtkIMHtml *imhtml, GtkTextIter *location,
@@ -35,8 +36,7 @@ button_info_new(GtkIMHtml *imhtml, GtkTextIter *location,
             location, TRUE);
     info->website = website;
     info->url = g_string_new_len(text, len);
-    info->iter = location;
-    info->insert_newline = -1;
+    info->has_newline = FALSE;
 
     return info;
 }
@@ -54,50 +54,14 @@ videoframes_init()
 {
     ht_button_info = g_hash_table_new_full(g_direct_hash, g_direct_equal,
             NULL, (GDestroyNotify) button_info_free);
+    ht_button_location = g_hash_table_new(g_direct_hash, g_direct_equal);
 }
 
 void
 videoframes_destroy()
 {
     g_hash_table_destroy(ht_button_info);
-}
-
-void
-videoframes_text_buffer_check_newline(gpointer key, gpointer values, gpointer user_data)
-{
-    GtkWidget *button = (GtkWidget *) key;
-    ButtonInfo *button_info = (ButtonInfo *) values;
-
-    if (button_info->insert_newline != -1)
-        return ;
-
-    GtkTextIter iter;
-
-    gtk_text_buffer_get_iter_at_mark(button_info->imhtml->text_buffer,
-            &iter, button_info->mark);
-	button_info->insert_newline = 0;
-
-    while (gtk_text_iter_forward_char(&iter)) {
-        gunichar crt_unichar = gtk_text_iter_get_char(&iter);
-
-        if (crt_unichar == G_UNICODE_BREAK_LINE_FEED)
-            break ;
-        if (g_unichar_isgraph(crt_unichar)) {
-            button_info->insert_newline = 1;
-            break ;
-        }
-    }
-
-    if (purple_prefs_get_bool("/plugins/gtk/embeddedvideo/show-video")) {
-        videoframes_toggle_button(button);
-        gtk_text_buffer_get_end_iter(button_info->imhtml->text_buffer, button_info->iter);
-    }
-}
-
-void
-videoframes_text_buffer_end_user_action_cb(GtkTextBuffer* text_buffer, gpointer user_data)
-{
-    g_hash_table_foreach(ht_button_info, videoframes_text_buffer_check_newline, NULL);
+    g_hash_table_destroy(ht_button_location);
 }
 
 GtkWidget *
@@ -127,9 +91,10 @@ videoframes_insert_new_button(GtkIMHtml *imhtml, GtkTextIter *location,
             G_CALLBACK(videoframes_toggle_button_cb), NULL);
     gtk_widget_show_all(button);
 
-    /* Add some information to the button. */
+    /* Add some information regarding the button. */
     g_hash_table_insert(ht_button_info, button,
             button_info_new(imhtml, location, website, text, len));
+    g_hash_table_insert(ht_button_location, button, location);
 
     /* Insert the button into the conversation. */
     GtkTextChildAnchor *anchor = gtk_text_buffer_create_child_anchor(
@@ -195,14 +160,11 @@ videoframes_toggle_button_cb(GtkWidget *button)
         gtk_widget_show_all(web_view);
 
         /* Insert the web view into the conversation. */
-        /* FIXME: Is this "\n" enough? What about those who use unicode chars?
-           What could happen on Windows without "\r"?
-        */
         gtk_text_buffer_insert(info->imhtml->text_buffer, &iter, "\n", 1);
         GtkTextChildAnchor *anchor = gtk_text_buffer_create_child_anchor(
                 info->imhtml->text_buffer, &iter);
         gtk_text_view_add_child_at_anchor(&info->imhtml->text_view, web_view, anchor);
-        if (info->insert_newline == 1)
+        if (info->has_newline == TRUE)
             gtk_text_buffer_insert(info->imhtml->text_buffer, &iter, "\n", 1);
 
     } else {
@@ -213,7 +175,7 @@ videoframes_toggle_button_cb(GtkWidget *button)
         /* Remove the video from the conversation.
            The web view is implicitly destroyed. */
         GtkTextIter next_iter = iter;
-        gtk_text_iter_forward_chars(&next_iter, 2 + (info->insert_newline));
+        gtk_text_iter_forward_chars(&next_iter, 2 + (int) info->has_newline);
         gtk_text_buffer_delete(info->imhtml->text_buffer, &iter, &next_iter);
 
     }
@@ -316,3 +278,39 @@ videoframes_generate_page(WebsiteInfo *website, GString *url)
 
     return ret;
 }
+
+void
+videoframes_text_buffer_check_newline(gpointer key, gpointer value, gpointer user_data)
+{
+    GtkWidget *button = (GtkWidget *) key;
+    GtkTextIter *location = (GtkTextIter *) value;
+    ButtonInfo *info = (ButtonInfo *) g_hash_table_lookup(ht_button_info, key);
+
+    GtkTextIter iter;
+    gtk_text_buffer_get_iter_at_mark(info->imhtml->text_buffer, &iter, info->mark);
+
+    while (gtk_text_iter_forward_char(&iter)) {
+        gunichar crt_unichar = gtk_text_iter_get_char(&iter);
+
+        if (g_unichar_break_type(crt_unichar) == G_UNICODE_BREAK_LINE_FEED)
+            break;
+
+        if (g_unichar_isgraph(crt_unichar)) {
+            info->has_newline = TRUE;
+            break;
+        }
+    }
+
+    if (purple_prefs_get_bool("/plugins/gtk/embeddedvideo/show-video")) {
+        videoframes_toggle_button(button);
+        gtk_text_buffer_get_end_iter(info->imhtml->text_buffer, location);
+    }
+}
+
+void
+videoframes_text_buffer_end_user_action_cb(GtkTextBuffer* text_buffer, gpointer user_data)
+{
+    g_hash_table_foreach(ht_button_location, videoframes_text_buffer_check_newline, NULL);
+    g_hash_table_remove_all(ht_button_location);
+}
+
