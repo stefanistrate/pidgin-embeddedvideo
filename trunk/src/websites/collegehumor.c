@@ -8,7 +8,7 @@ WebsiteInfo collegehumor = {
         "<param name=\"wmode\" value=\"transparent\"/>"
         "<param name=\"allowScriptAccess\" value=\"always\"/>"
         "<param name=\"movie\" quality=\"best\" value=\"http://www.collegehumor.com/moogaloop/moogaloop.swf?clip_id=%VIDEO_ID%&fullscreen=1\"/>"
-        "<embed src=\"http://www.collegehumor.com/moogaloop/moogaloop.swf?clip_id=%VIDEO_ID%&fullscreen=1\" type=\"application/x-shockwave-flash\" wmode=\"transparent\"  width=\"425\" height=\"320\"  allowScriptAccess=\"always\"></embed>"
+        "<embed src=\"http://www.collegehumor.com/moogaloop/moogaloop.swf?clip_id=%VIDEO_ID%&fullscreen=1\" type=\"application/x-shockwave-flash\" wmode=\"transparent\"  width=\"425\" height=\"320\" allowfullscreen=\"true\" allowScriptAccess=\"always\"></embed>"
         "</object>",
     NULL
 };
