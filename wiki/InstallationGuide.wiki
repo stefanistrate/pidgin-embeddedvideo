@@ -16,12 +16,12 @@ You will need these packages to be installed before compiling the plugin on your
   * libcurl3-dev
   * libwebkit-dev >= 1.1.12
 
-On Ubuntu Karmic you may type the following in a command line to install the requirements...
+On Ubuntu Karmic you may type the following in a terminal to install the dependencies...
 {{{
 sudo apt-get install pidgin-dev libglib2.0-dev libcurl3-dev libwebkit-dev
 }}}
 
-Otherwise, if you don't have the right libwebkit-dev package in your repository, you may take a look on [https://launchpad.net/~webkit-team/+archive/ppa this]. They will tell you how to install it on your machine in just a few steps:
+Otherwise, if you need other version of libwebkit-dev package than is in your repository, you may take a look on [https://launchpad.net/~webkit-team/+archive/ppa this]. They will tell you how to install it on your machine in just a few steps:
 
   * Write in a terminal...
 {{{
