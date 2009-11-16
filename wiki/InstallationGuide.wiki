@@ -21,7 +21,7 @@ On Ubuntu Karmic you may type the following in a terminal to install the depende
 sudo apt-get install pidgin-dev libglib2.0-dev libcurl3-dev libwebkit-dev
 }}}
 
-On other Ubuntu versions you may need the libwebkit-dev package which may not be already in the repositories. You will find it [https://launchpad.net/~webkit-team/+archive/ppa here]. This page will tell you how to install it on your machine in just a few steps:
+On other Ubuntu versions, if you don't see the right version of the libwebkit-dev package in the repositories, you can find it [https://launchpad.net/~webkit-team/+archive/ppa here]. This page will tell you how to install it on your machine in just a few steps:
 
   * Write in a terminal...
 {{{
