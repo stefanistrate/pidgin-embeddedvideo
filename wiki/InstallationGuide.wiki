@@ -16,7 +16,12 @@ You will need these packages to be installed before compiling the plugin on your
   * libcurl3-dev
   * libwebkit-dev >= 1.1.12
 
-Whether your Ubuntu version is at most 9.04 or you don't have the right libwebkit-dev package in your repository, you may take a look on [https://launchpad.net/~webkit-team/+archive/ppa this]. They will tell you how to install it on your machine in just a few steps:
+On Ubuntu Karmic you may type the following in a command line to install the requirements...
+{{{
+sudo apt-get install pidgin-dev libglib2.0-dev libcurl3-dev libwebkit-dev
+}}}
+
+Otherwise, if you don't have the right libwebkit-dev package in your repository, you may take a look on [https://launchpad.net/~webkit-team/+archive/ppa this]. They will tell you how to install it on your machine in just a few steps:
 
   * Write in a terminal...
 {{{
@@ -32,7 +37,7 @@ https://launchpad.net/+help/soyuz/images/software-sources-3rdparty-tab.png
 deb http://ppa.launchpad.net/webkit-team/ppa/ubuntu YOUR_UBUNTU_VERSION main
 }}}
 where {{{ YOUR_UBUNTU_VERSION }}} is {{{ jaunty }}} for Jaunty (9.04), {{{ intrepid }}} for Intrepid (8.10) or {{{ hardy }}} for Hardy (8.04). Then click _Close_.
-  * Open _System > Administration > Synaptic Package Manager_, press the _Reload_ button and install the latest version of the libwebkit-dev package.
+  * Open _System > Administration > Synaptic Package Manager_, press the _Reload_ button to get the latest version of the libwebkit-dev package.
 
 === Compilation ===
 
