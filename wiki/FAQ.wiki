@@ -23,6 +23,6 @@ The most common cause of this is that you don't have Adobe Flash Player installe
 
 Go to the "[http://code.google.com/p/pidgin-embeddedvideo/wiki/Screenshots#Configuration Configure Plugin]" menu and deselect the "Show every video instantly" option. Thereby, videos will be hidden by default. You can watch them by clicking on the toggle button (the little arrow).
 
-=== How do I add a new video site? ===
+=== I want support for a new video site. What can I do? ===
 
-We have written a tutorial [HowToAddANewVideoSite here] about adding new video sites. Take a look!
+If you want a new video site which is not supported, please feel free to ask for it by opening [http://code.google.com/p/pidgin-embeddedvideo/issues/list a new issue].
