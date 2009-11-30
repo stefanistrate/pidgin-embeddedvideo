@@ -148,6 +148,8 @@ videoframes_toggle_button_cb(GtkWidget *button)
 
         /* Create the web view. */
         GtkWidget *web_view = webkit_web_view_new();
+        GdkColormap *colormap = gdk_screen_get_system_colormap(gdk_screen_get_default());
+        gtk_widget_set_colormap(web_view, colormap);
 
         gchar *filename = videoframes_generate_page(info->website, info->url);
         webkit_web_view_load_uri(WEBKIT_WEB_VIEW(web_view), filename);
