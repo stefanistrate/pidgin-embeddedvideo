@@ -1,23 +1,17 @@
 PLUGIN_CFLAGS = @GLIB_CFLAGS@ @PIDGIN_CFLAGS@ @WEBKIT_CFLAGS@ @LIBCURL_CFLAGS@
 
-WEBSITES =  collegehumor.lo \
-            dailymotion.lo \
-            google-video.lo \
-            metacafe.lo \
-            myspace-video.lo \
-            trilulilu-audio.lo \
-            trilulilu-image.lo \
-            trilulilu-video.lo \
-            vimeo.lo \
-            yahoo-video.lo \
-            youtube.lo
-WEBSITES_CFLAGS = $(PLUGIN_CFLAGS) -I..
-
-CLEANFILES = $(WEBSITES) libwebsites.la
-
-.c.lo:
-	$(LIBTOOL) --mode=compile $(CC) $(CFLAGS) -c $< -o $@ $(WEBSITES_CFLAGS)
-
-all: $(WEBSITES)
-	$(LIBTOOL) --mode=link $(CC) $(CFLAGS) -o libwebsites.la $(LIBS) $(LDFLAGS) $(WEBSITES)
+noinst_LTLIBRARIES = libwebsites.la
+libwebsites_la_SOURCES =    \
+    collegehumor.c          \
+    dailymotion.c           \
+    google-video.c          \
+    metacafe.c              \
+    myspace-video.c         \
+    trilulilu-audio.c       \
+    trilulilu-image.c       \
+    trilulilu-video.c       \
+    vimeo.c                 \
+    yahoo-video.c           \
+    youtube.c
+libwebsites_la_CFLAGS = $(PLUGIN_CFLAGS) -I..
 

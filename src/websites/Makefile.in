@@ -14,6 +14,7 @@
 # PARTICULAR PURPOSE.
 
 @SET_MAKE@
+
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
 pkgincludedir = $(includedir)/@PACKAGE@
@@ -43,8 +44,36 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-SOURCES =
-DIST_SOURCES =
+LTLIBRARIES = $(noinst_LTLIBRARIES)
+libwebsites_la_LIBADD =
+am_libwebsites_la_OBJECTS = libwebsites_la-collegehumor.lo \
+	libwebsites_la-dailymotion.lo libwebsites_la-google-video.lo \
+	libwebsites_la-metacafe.lo libwebsites_la-myspace-video.lo \
+	libwebsites_la-trilulilu-audio.lo \
+	libwebsites_la-trilulilu-image.lo \
+	libwebsites_la-trilulilu-video.lo libwebsites_la-vimeo.lo \
+	libwebsites_la-yahoo-video.lo libwebsites_la-youtube.lo
+libwebsites_la_OBJECTS = $(am_libwebsites_la_OBJECTS)
+libwebsites_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(libwebsites_la_CFLAGS) \
+	$(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+DEFAULT_INCLUDES = -I.@am__isrc@
+depcomp = $(SHELL) $(top_srcdir)/depcomp
+am__depfiles_maybe = depfiles
+am__mv = mv -f
+COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
+	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+CCLD = $(CC)
+LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
+SOURCES = $(libwebsites_la_SOURCES)
+DIST_SOURCES = $(libwebsites_la_SOURCES)
+ETAGS = etags
+CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
@@ -172,24 +201,25 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 PLUGIN_CFLAGS = @GLIB_CFLAGS@ @PIDGIN_CFLAGS@ @WEBKIT_CFLAGS@ @LIBCURL_CFLAGS@
-WEBSITES = collegehumor.lo \
-            dailymotion.lo \
-            google-video.lo \
-            metacafe.lo \
-            myspace-video.lo \
-            trilulilu-audio.lo \
-            trilulilu-image.lo \
-            trilulilu-video.lo \
-            vimeo.lo \
-            yahoo-video.lo \
-            youtube.lo
+noinst_LTLIBRARIES = libwebsites.la
+libwebsites_la_SOURCES = \
+    collegehumor.c          \
+    dailymotion.c           \
+    google-video.c          \
+    metacafe.c              \
+    myspace-video.c         \
+    trilulilu-audio.c       \
+    trilulilu-image.c       \
+    trilulilu-video.c       \
+    vimeo.c                 \
+    yahoo-video.c           \
+    youtube.c
 
-WEBSITES_CFLAGS = $(PLUGIN_CFLAGS) -I..
-CLEANFILES = $(WEBSITES) libwebsites.la
+libwebsites_la_CFLAGS = $(PLUGIN_CFLAGS) -I..
 all: all-am
 
 .SUFFIXES:
-.SUFFIXES: .c .lo
+.SUFFIXES: .c .lo .o .obj
 $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -221,17 +251,190 @@ $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
 
+clean-noinstLTLIBRARIES:
+	-test -z "$(noinst_LTLIBRARIES)" || rm -f $(noinst_LTLIBRARIES)
+	@list='$(noinst_LTLIBRARIES)'; for p in $$list; do \
+	  dir="`echo $$p | sed -e 's|/[^/]*$$||'`"; \
+	  test "$$dir" != "$$p" || dir=.; \
+	  echo "rm -f \"$${dir}/so_locations\""; \
+	  rm -f "$${dir}/so_locations"; \
+	done
+libwebsites.la: $(libwebsites_la_OBJECTS) $(libwebsites_la_DEPENDENCIES) 
+	$(libwebsites_la_LINK)  $(libwebsites_la_OBJECTS) $(libwebsites_la_LIBADD) $(LIBS)
+
+mostlyclean-compile:
+	-rm -f *.$(OBJEXT)
+
+distclean-compile:
+	-rm -f *.tab.c
+
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwebsites_la-collegehumor.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwebsites_la-dailymotion.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwebsites_la-google-video.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwebsites_la-metacafe.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwebsites_la-myspace-video.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwebsites_la-trilulilu-audio.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwebsites_la-trilulilu-image.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwebsites_la-trilulilu-video.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwebsites_la-vimeo.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwebsites_la-yahoo-video.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwebsites_la-youtube.Plo@am__quote@
+
+.c.o:
+@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(COMPILE) -c $<
+
+.c.obj:
+@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(COMPILE) -c `$(CYGPATH_W) '$<'`
+
+.c.lo:
+@am__fastdepCC_TRUE@	$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
+
+libwebsites_la-collegehumor.lo: collegehumor.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libwebsites_la_CFLAGS) $(CFLAGS) -MT libwebsites_la-collegehumor.lo -MD -MP -MF $(DEPDIR)/libwebsites_la-collegehumor.Tpo -c -o libwebsites_la-collegehumor.lo `test -f 'collegehumor.c' || echo '$(srcdir)/'`collegehumor.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libwebsites_la-collegehumor.Tpo $(DEPDIR)/libwebsites_la-collegehumor.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='collegehumor.c' object='libwebsites_la-collegehumor.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libwebsites_la_CFLAGS) $(CFLAGS) -c -o libwebsites_la-collegehumor.lo `test -f 'collegehumor.c' || echo '$(srcdir)/'`collegehumor.c
+
+libwebsites_la-dailymotion.lo: dailymotion.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libwebsites_la_CFLAGS) $(CFLAGS) -MT libwebsites_la-dailymotion.lo -MD -MP -MF $(DEPDIR)/libwebsites_la-dailymotion.Tpo -c -o libwebsites_la-dailymotion.lo `test -f 'dailymotion.c' || echo '$(srcdir)/'`dailymotion.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libwebsites_la-dailymotion.Tpo $(DEPDIR)/libwebsites_la-dailymotion.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='dailymotion.c' object='libwebsites_la-dailymotion.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libwebsites_la_CFLAGS) $(CFLAGS) -c -o libwebsites_la-dailymotion.lo `test -f 'dailymotion.c' || echo '$(srcdir)/'`dailymotion.c
+
+libwebsites_la-google-video.lo: google-video.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libwebsites_la_CFLAGS) $(CFLAGS) -MT libwebsites_la-google-video.lo -MD -MP -MF $(DEPDIR)/libwebsites_la-google-video.Tpo -c -o libwebsites_la-google-video.lo `test -f 'google-video.c' || echo '$(srcdir)/'`google-video.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libwebsites_la-google-video.Tpo $(DEPDIR)/libwebsites_la-google-video.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='google-video.c' object='libwebsites_la-google-video.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libwebsites_la_CFLAGS) $(CFLAGS) -c -o libwebsites_la-google-video.lo `test -f 'google-video.c' || echo '$(srcdir)/'`google-video.c
+
+libwebsites_la-metacafe.lo: metacafe.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libwebsites_la_CFLAGS) $(CFLAGS) -MT libwebsites_la-metacafe.lo -MD -MP -MF $(DEPDIR)/libwebsites_la-metacafe.Tpo -c -o libwebsites_la-metacafe.lo `test -f 'metacafe.c' || echo '$(srcdir)/'`metacafe.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libwebsites_la-metacafe.Tpo $(DEPDIR)/libwebsites_la-metacafe.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='metacafe.c' object='libwebsites_la-metacafe.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libwebsites_la_CFLAGS) $(CFLAGS) -c -o libwebsites_la-metacafe.lo `test -f 'metacafe.c' || echo '$(srcdir)/'`metacafe.c
+
+libwebsites_la-myspace-video.lo: myspace-video.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libwebsites_la_CFLAGS) $(CFLAGS) -MT libwebsites_la-myspace-video.lo -MD -MP -MF $(DEPDIR)/libwebsites_la-myspace-video.Tpo -c -o libwebsites_la-myspace-video.lo `test -f 'myspace-video.c' || echo '$(srcdir)/'`myspace-video.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libwebsites_la-myspace-video.Tpo $(DEPDIR)/libwebsites_la-myspace-video.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='myspace-video.c' object='libwebsites_la-myspace-video.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libwebsites_la_CFLAGS) $(CFLAGS) -c -o libwebsites_la-myspace-video.lo `test -f 'myspace-video.c' || echo '$(srcdir)/'`myspace-video.c
+
+libwebsites_la-trilulilu-audio.lo: trilulilu-audio.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libwebsites_la_CFLAGS) $(CFLAGS) -MT libwebsites_la-trilulilu-audio.lo -MD -MP -MF $(DEPDIR)/libwebsites_la-trilulilu-audio.Tpo -c -o libwebsites_la-trilulilu-audio.lo `test -f 'trilulilu-audio.c' || echo '$(srcdir)/'`trilulilu-audio.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libwebsites_la-trilulilu-audio.Tpo $(DEPDIR)/libwebsites_la-trilulilu-audio.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='trilulilu-audio.c' object='libwebsites_la-trilulilu-audio.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libwebsites_la_CFLAGS) $(CFLAGS) -c -o libwebsites_la-trilulilu-audio.lo `test -f 'trilulilu-audio.c' || echo '$(srcdir)/'`trilulilu-audio.c
+
+libwebsites_la-trilulilu-image.lo: trilulilu-image.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libwebsites_la_CFLAGS) $(CFLAGS) -MT libwebsites_la-trilulilu-image.lo -MD -MP -MF $(DEPDIR)/libwebsites_la-trilulilu-image.Tpo -c -o libwebsites_la-trilulilu-image.lo `test -f 'trilulilu-image.c' || echo '$(srcdir)/'`trilulilu-image.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libwebsites_la-trilulilu-image.Tpo $(DEPDIR)/libwebsites_la-trilulilu-image.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='trilulilu-image.c' object='libwebsites_la-trilulilu-image.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libwebsites_la_CFLAGS) $(CFLAGS) -c -o libwebsites_la-trilulilu-image.lo `test -f 'trilulilu-image.c' || echo '$(srcdir)/'`trilulilu-image.c
+
+libwebsites_la-trilulilu-video.lo: trilulilu-video.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libwebsites_la_CFLAGS) $(CFLAGS) -MT libwebsites_la-trilulilu-video.lo -MD -MP -MF $(DEPDIR)/libwebsites_la-trilulilu-video.Tpo -c -o libwebsites_la-trilulilu-video.lo `test -f 'trilulilu-video.c' || echo '$(srcdir)/'`trilulilu-video.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libwebsites_la-trilulilu-video.Tpo $(DEPDIR)/libwebsites_la-trilulilu-video.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='trilulilu-video.c' object='libwebsites_la-trilulilu-video.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libwebsites_la_CFLAGS) $(CFLAGS) -c -o libwebsites_la-trilulilu-video.lo `test -f 'trilulilu-video.c' || echo '$(srcdir)/'`trilulilu-video.c
+
+libwebsites_la-vimeo.lo: vimeo.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libwebsites_la_CFLAGS) $(CFLAGS) -MT libwebsites_la-vimeo.lo -MD -MP -MF $(DEPDIR)/libwebsites_la-vimeo.Tpo -c -o libwebsites_la-vimeo.lo `test -f 'vimeo.c' || echo '$(srcdir)/'`vimeo.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libwebsites_la-vimeo.Tpo $(DEPDIR)/libwebsites_la-vimeo.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='vimeo.c' object='libwebsites_la-vimeo.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libwebsites_la_CFLAGS) $(CFLAGS) -c -o libwebsites_la-vimeo.lo `test -f 'vimeo.c' || echo '$(srcdir)/'`vimeo.c
+
+libwebsites_la-yahoo-video.lo: yahoo-video.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libwebsites_la_CFLAGS) $(CFLAGS) -MT libwebsites_la-yahoo-video.lo -MD -MP -MF $(DEPDIR)/libwebsites_la-yahoo-video.Tpo -c -o libwebsites_la-yahoo-video.lo `test -f 'yahoo-video.c' || echo '$(srcdir)/'`yahoo-video.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libwebsites_la-yahoo-video.Tpo $(DEPDIR)/libwebsites_la-yahoo-video.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='yahoo-video.c' object='libwebsites_la-yahoo-video.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libwebsites_la_CFLAGS) $(CFLAGS) -c -o libwebsites_la-yahoo-video.lo `test -f 'yahoo-video.c' || echo '$(srcdir)/'`yahoo-video.c
+
+libwebsites_la-youtube.lo: youtube.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libwebsites_la_CFLAGS) $(CFLAGS) -MT libwebsites_la-youtube.lo -MD -MP -MF $(DEPDIR)/libwebsites_la-youtube.Tpo -c -o libwebsites_la-youtube.lo `test -f 'youtube.c' || echo '$(srcdir)/'`youtube.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libwebsites_la-youtube.Tpo $(DEPDIR)/libwebsites_la-youtube.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='youtube.c' object='libwebsites_la-youtube.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libwebsites_la_CFLAGS) $(CFLAGS) -c -o libwebsites_la-youtube.lo `test -f 'youtube.c' || echo '$(srcdir)/'`youtube.c
+
 mostlyclean-libtool:
 	-rm -f *.lo
 
 clean-libtool:
 	-rm -rf .libs _libs
+
+ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
+	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
+	unique=`for i in $$list; do \
+	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
+	  done | \
+	  $(AWK) '{ files[$$0] = 1; nonempty = 1; } \
+	      END { if (nonempty) { for (i in files) print i; }; }'`; \
+	mkid -fID $$unique
 tags: TAGS
-TAGS:
 
+TAGS:  $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
+		$(TAGS_FILES) $(LISP)
+	set x; \
+	here=`pwd`; \
+	list='$(SOURCES) $(HEADERS)  $(LISP) $(TAGS_FILES)'; \
+	unique=`for i in $$list; do \
+	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
+	  done | \
+	  $(AWK) '{ files[$$0] = 1; nonempty = 1; } \
+	      END { if (nonempty) { for (i in files) print i; }; }'`; \
+	shift; \
+	if test -z "$(ETAGS_ARGS)$$*$$unique"; then :; else \
+	  test -n "$$unique" || unique=$$empty_fix; \
+	  if test $$# -gt 0; then \
+	    $(ETAGS) $(ETAGSFLAGS) $(AM_ETAGSFLAGS) $(ETAGS_ARGS) \
+	      "$$@" $$unique; \
+	  else \
+	    $(ETAGS) $(ETAGSFLAGS) $(AM_ETAGSFLAGS) $(ETAGS_ARGS) \
+	      $$unique; \
+	  fi; \
+	fi
 ctags: CTAGS
-CTAGS:
+CTAGS:  $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
+		$(TAGS_FILES) $(LISP)
+	list='$(SOURCES) $(HEADERS)  $(LISP) $(TAGS_FILES)'; \
+	unique=`for i in $$list; do \
+	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
+	  done | \
+	  $(AWK) '{ files[$$0] = 1; nonempty = 1; } \
+	      END { if (nonempty) { for (i in files) print i; }; }'`; \
+	test -z "$(CTAGS_ARGS)$$unique" \
+	  || $(CTAGS) $(CTAGSFLAGS) $(AM_CTAGSFLAGS) $(CTAGS_ARGS) \
+	     $$unique
 
+GTAGS:
+	here=`$(am__cd) $(top_builddir) && pwd` \
+	  && $(am__cd) $(top_srcdir) \
+	  && gtags -i $(GTAGS_ARGS) "$$here"
+
+distclean-tags:
+	-rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH tags
 
 distdir: $(DISTFILES)
 	@srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
@@ -265,7 +468,7 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile
+all-am: Makefile $(LTLIBRARIES)
 installdirs:
 install: install-am
 install-exec: install-exec-am
@@ -284,7 +487,6 @@ install-strip:
 mostlyclean-generic:
 
 clean-generic:
-	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
@@ -295,11 +497,14 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-generic clean-libtool mostlyclean-am
+clean-am: clean-generic clean-libtool clean-noinstLTLIBRARIES \
+	mostlyclean-am
 
 distclean: distclean-am
+	-rm -rf ./$(DEPDIR)
 	-rm -f Makefile
-distclean-am: clean-am distclean-generic
+distclean-am: clean-am distclean-compile distclean-generic \
+	distclean-tags
 
 dvi: dvi-am
 
@@ -342,12 +547,14 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
+	-rm -rf ./$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
 mostlyclean: mostlyclean-am
 
-mostlyclean-am: mostlyclean-generic mostlyclean-libtool
+mostlyclean-am: mostlyclean-compile mostlyclean-generic \
+	mostlyclean-libtool
 
 pdf: pdf-am
 
@@ -361,23 +568,19 @@ uninstall-am:
 
 .MAKE: install-am install-strip
 
-.PHONY: all all-am check check-am clean clean-generic clean-libtool \
-	distclean distclean-generic distclean-libtool distdir dvi \
-	dvi-am html html-am info info-am install install-am \
-	install-data install-data-am install-dvi install-dvi-am \
-	install-exec install-exec-am install-html install-html-am \
-	install-info install-info-am install-man install-pdf \
-	install-pdf-am install-ps install-ps-am install-strip \
-	installcheck installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-generic \
-	mostlyclean-libtool pdf pdf-am ps ps-am uninstall uninstall-am
+.PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
+	clean-libtool clean-noinstLTLIBRARIES ctags distclean \
+	distclean-compile distclean-generic distclean-libtool \
+	distclean-tags distdir dvi dvi-am html html-am info info-am \
+	install install-am install-data install-data-am install-dvi \
+	install-dvi-am install-exec install-exec-am install-html \
+	install-html-am install-info install-info-am install-man \
+	install-pdf install-pdf-am install-ps install-ps-am \
+	install-strip installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
+	pdf pdf-am ps ps-am tags uninstall uninstall-am
 
-
-.c.lo:
-	$(LIBTOOL) --mode=compile $(CC) $(CFLAGS) -c $< -o $@ $(WEBSITES_CFLAGS)
-
-all: $(WEBSITES)
-	$(LIBTOOL) --mode=link $(CC) $(CFLAGS) -o libwebsites.la $(LIBS) $(LDFLAGS) $(WEBSITES)
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
