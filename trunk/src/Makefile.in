@@ -44,15 +44,6 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-SOURCES =
-DIST_SOURCES =
-RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
-	html-recursive info-recursive install-data-recursive \
-	install-dvi-recursive install-exec-recursive \
-	install-html-recursive install-info-recursive \
-	install-pdf-recursive install-ps-recursive install-recursive \
-	installcheck-recursive installdirs-recursive pdf-recursive \
-	ps-recursive uninstall-recursive
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
     $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
@@ -75,7 +66,36 @@ am__base_list = \
   sed '$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;s/\n/ /g' | \
   sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
 am__installdirs = "$(DESTDIR)$(plugindir)"
-DATA = $(plugin_DATA)
+LTLIBRARIES = $(plugin_LTLIBRARIES)
+embeddedvideo_la_DEPENDENCIES = websites/libwebsites.la
+am_embeddedvideo_la_OBJECTS = embeddedvideo_la-embeddedvideo.lo \
+	embeddedvideo_la-videoframes.lo embeddedvideo_la-websites.lo
+embeddedvideo_la_OBJECTS = $(am_embeddedvideo_la_OBJECTS)
+embeddedvideo_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(embeddedvideo_la_CFLAGS) \
+	$(CFLAGS) $(embeddedvideo_la_LDFLAGS) $(LDFLAGS) -o $@
+DEFAULT_INCLUDES = -I.@am__isrc@
+depcomp = $(SHELL) $(top_srcdir)/depcomp
+am__depfiles_maybe = depfiles
+am__mv = mv -f
+COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
+	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+CCLD = $(CC)
+LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
+SOURCES = $(embeddedvideo_la_SOURCES)
+DIST_SOURCES = $(embeddedvideo_la_SOURCES)
+RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
+	html-recursive info-recursive install-data-recursive \
+	install-dvi-recursive install-exec-recursive \
+	install-html-recursive install-info-recursive \
+	install-pdf-recursive install-ps-recursive install-recursive \
+	installcheck-recursive installdirs-recursive pdf-recursive \
+	ps-recursive uninstall-recursive
 RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
   distclean-recursive maintainer-clean-recursive
 AM_RECURSIVE_TARGETS = $(RECURSIVE_TARGETS:-recursive=) \
@@ -142,11 +162,11 @@ INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LD = @LD@
-LDFLAGS = @LDFLAGS@ -Lwebsites
+LDFLAGS = @LDFLAGS@
 LIBCURL_CFLAGS = @LIBCURL_CFLAGS@
 LIBCURL_LIBS = @LIBCURL_LIBS@
 LIBOBJS = @LIBOBJS@
-LIBS = @LIBS@ -lwebsites
+LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
 LIPO = @LIPO@
 LN_S = @LN_S@
@@ -239,13 +259,19 @@ SUBDIRS = websites
 PLUGIN_CFLAGS = @GLIB_CFLAGS@ @PIDGIN_CFLAGS@ @WEBKIT_CFLAGS@ @LIBCURL_CFLAGS@
 PLUGIN_LIBS = @GLIB_LIBS@ @PIDGIN_LIBS@ @WEBKIT_LIBS@ @LIBCURL_LIBS@
 plugindir = @PLUGINDIR@
-plugin_DATA = embeddedvideo.so
-OBJECTS = videoframes.lo websites.lo
-CLEANFILES = embeddedvideo.so $(OBJECTS)
+plugin_LTLIBRARIES = embeddedvideo.la
+embeddedvideo_la_SOURCES = \
+    embeddedvideo.c         \
+    videoframes.c           \
+    websites.c
+
+embeddedvideo_la_CFLAGS = $(PLUGIN_CFLAGS)
+embeddedvideo_la_LIBADD = websites/libwebsites.la
+embeddedvideo_la_LDFLAGS = $(PLUGIN_LIBS) -module -avoid-version -shared
 all: all-recursive
 
 .SUFFIXES:
-.SUFFIXES: .c .lo
+.SUFFIXES: .c .lo .o .obj
 $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -276,32 +302,97 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
+install-pluginLTLIBRARIES: $(plugin_LTLIBRARIES)
+	@$(NORMAL_INSTALL)
+	test -z "$(plugindir)" || $(MKDIR_P) "$(DESTDIR)$(plugindir)"
+	@list='$(plugin_LTLIBRARIES)'; test -n "$(plugindir)" || list=; \
+	list2=; for p in $$list; do \
+	  if test -f $$p; then \
+	    list2="$$list2 $$p"; \
+	  else :; fi; \
+	done; \
+	test -z "$$list2" || { \
+	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 '$(DESTDIR)$(plugindir)'"; \
+	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 "$(DESTDIR)$(plugindir)"; \
+	}
+
+uninstall-pluginLTLIBRARIES:
+	@$(NORMAL_UNINSTALL)
+	@list='$(plugin_LTLIBRARIES)'; test -n "$(plugindir)" || list=; \
+	for p in $$list; do \
+	  $(am__strip_dir) \
+	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(plugindir)/$$f'"; \
+	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(plugindir)/$$f"; \
+	done
+
+clean-pluginLTLIBRARIES:
+	-test -z "$(plugin_LTLIBRARIES)" || rm -f $(plugin_LTLIBRARIES)
+	@list='$(plugin_LTLIBRARIES)'; for p in $$list; do \
+	  dir="`echo $$p | sed -e 's|/[^/]*$$||'`"; \
+	  test "$$dir" != "$$p" || dir=.; \
+	  echo "rm -f \"$${dir}/so_locations\""; \
+	  rm -f "$${dir}/so_locations"; \
+	done
+embeddedvideo.la: $(embeddedvideo_la_OBJECTS) $(embeddedvideo_la_DEPENDENCIES) 
+	$(embeddedvideo_la_LINK) -rpath $(plugindir) $(embeddedvideo_la_OBJECTS) $(embeddedvideo_la_LIBADD) $(LIBS)
+
+mostlyclean-compile:
+	-rm -f *.$(OBJEXT)
+
+distclean-compile:
+	-rm -f *.tab.c
+
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/embeddedvideo_la-embeddedvideo.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/embeddedvideo_la-videoframes.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/embeddedvideo_la-websites.Plo@am__quote@
+
+.c.o:
+@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(COMPILE) -c $<
+
+.c.obj:
+@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(COMPILE) -c `$(CYGPATH_W) '$<'`
+
+.c.lo:
+@am__fastdepCC_TRUE@	$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
+
+embeddedvideo_la-embeddedvideo.lo: embeddedvideo.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(embeddedvideo_la_CFLAGS) $(CFLAGS) -MT embeddedvideo_la-embeddedvideo.lo -MD -MP -MF $(DEPDIR)/embeddedvideo_la-embeddedvideo.Tpo -c -o embeddedvideo_la-embeddedvideo.lo `test -f 'embeddedvideo.c' || echo '$(srcdir)/'`embeddedvideo.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/embeddedvideo_la-embeddedvideo.Tpo $(DEPDIR)/embeddedvideo_la-embeddedvideo.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='embeddedvideo.c' object='embeddedvideo_la-embeddedvideo.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(embeddedvideo_la_CFLAGS) $(CFLAGS) -c -o embeddedvideo_la-embeddedvideo.lo `test -f 'embeddedvideo.c' || echo '$(srcdir)/'`embeddedvideo.c
+
+embeddedvideo_la-videoframes.lo: videoframes.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(embeddedvideo_la_CFLAGS) $(CFLAGS) -MT embeddedvideo_la-videoframes.lo -MD -MP -MF $(DEPDIR)/embeddedvideo_la-videoframes.Tpo -c -o embeddedvideo_la-videoframes.lo `test -f 'videoframes.c' || echo '$(srcdir)/'`videoframes.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/embeddedvideo_la-videoframes.Tpo $(DEPDIR)/embeddedvideo_la-videoframes.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='videoframes.c' object='embeddedvideo_la-videoframes.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(embeddedvideo_la_CFLAGS) $(CFLAGS) -c -o embeddedvideo_la-videoframes.lo `test -f 'videoframes.c' || echo '$(srcdir)/'`videoframes.c
+
+embeddedvideo_la-websites.lo: websites.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(embeddedvideo_la_CFLAGS) $(CFLAGS) -MT embeddedvideo_la-websites.lo -MD -MP -MF $(DEPDIR)/embeddedvideo_la-websites.Tpo -c -o embeddedvideo_la-websites.lo `test -f 'websites.c' || echo '$(srcdir)/'`websites.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/embeddedvideo_la-websites.Tpo $(DEPDIR)/embeddedvideo_la-websites.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='websites.c' object='embeddedvideo_la-websites.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(embeddedvideo_la_CFLAGS) $(CFLAGS) -c -o embeddedvideo_la-websites.lo `test -f 'websites.c' || echo '$(srcdir)/'`websites.c
 
 mostlyclean-libtool:
 	-rm -f *.lo
 
 clean-libtool:
 	-rm -rf .libs _libs
-install-pluginDATA: $(plugin_DATA)
-	@$(NORMAL_INSTALL)
-	test -z "$(plugindir)" || $(MKDIR_P) "$(DESTDIR)$(plugindir)"
-	@list='$(plugin_DATA)'; test -n "$(plugindir)" || list=; \
-	for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  echo "$$d$$p"; \
-	done | $(am__base_list) | \
-	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(plugindir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(plugindir)" || exit $$?; \
-	done
-
-uninstall-pluginDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(plugin_DATA)'; test -n "$(plugindir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	test -n "$$files" || exit 0; \
-	echo " ( cd '$(DESTDIR)$(plugindir)' && rm -f" $$files ")"; \
-	cd "$(DESTDIR)$(plugindir)" && rm -f $$files
 
 # This directory's subdirectories are mostly independent; you can cd
 # into them and run `make' without going through this Makefile.
@@ -498,7 +589,7 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-recursive
-all-am: Makefile $(DATA)
+all-am: Makefile $(LTLIBRARIES)
 installdirs: installdirs-recursive
 installdirs-am:
 	for dir in "$(DESTDIR)$(plugindir)"; do \
@@ -521,7 +612,6 @@ install-strip:
 mostlyclean-generic:
 
 clean-generic:
-	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
@@ -532,11 +622,14 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-recursive
 
-clean-am: clean-generic clean-libtool mostlyclean-am
+clean-am: clean-generic clean-libtool clean-pluginLTLIBRARIES \
+	mostlyclean-am
 
 distclean: distclean-recursive
+	-rm -rf ./$(DEPDIR)
 	-rm -f Makefile
-distclean-am: clean-am distclean-generic distclean-tags
+distclean-am: clean-am distclean-compile distclean-generic \
+	distclean-tags
 
 dvi: dvi-recursive
 
@@ -550,7 +643,7 @@ info: info-recursive
 
 info-am:
 
-install-data-am: install-pluginDATA
+install-data-am: install-pluginLTLIBRARIES
 
 install-dvi: install-dvi-recursive
 
@@ -579,12 +672,14 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-recursive
+	-rm -rf ./$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
 mostlyclean: mostlyclean-recursive
 
-mostlyclean-am: mostlyclean-generic mostlyclean-libtool
+mostlyclean-am: mostlyclean-compile mostlyclean-generic \
+	mostlyclean-libtool
 
 pdf: pdf-recursive
 
@@ -594,38 +689,27 @@ ps: ps-recursive
 
 ps-am:
 
-uninstall-am: uninstall-pluginDATA
+uninstall-am: uninstall-pluginLTLIBRARIES
 
 .MAKE: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) ctags-recursive \
 	install-am install-strip tags-recursive
 
 .PHONY: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) CTAGS GTAGS \
 	all all-am check check-am clean clean-generic clean-libtool \
-	ctags ctags-recursive distclean distclean-generic \
-	distclean-libtool distclean-tags distdir dvi dvi-am html \
-	html-am info info-am install install-am install-data \
-	install-data-am install-dvi install-dvi-am install-exec \
-	install-exec-am install-html install-html-am install-info \
-	install-info-am install-man install-pdf install-pdf-am \
-	install-pluginDATA install-ps install-ps-am install-strip \
-	installcheck installcheck-am installdirs installdirs-am \
-	maintainer-clean maintainer-clean-generic mostlyclean \
+	clean-pluginLTLIBRARIES ctags ctags-recursive distclean \
+	distclean-compile distclean-generic distclean-libtool \
+	distclean-tags distdir dvi dvi-am html html-am info info-am \
+	install install-am install-data install-data-am install-dvi \
+	install-dvi-am install-exec install-exec-am install-html \
+	install-html-am install-info install-info-am install-man \
+	install-pdf install-pdf-am install-pluginLTLIBRARIES \
+	install-ps install-ps-am install-strip installcheck \
+	installcheck-am installdirs installdirs-am maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-compile \
 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
 	tags tags-recursive uninstall uninstall-am \
-	uninstall-pluginDATA
+	uninstall-pluginLTLIBRARIES
 
-
-.c.lo:
-	$(LIBTOOL) --mode=compile $(CC) $(CFLAGS) -c $< -o $@ $(PLUGIN_CFLAGS)
-
-embeddedvideo.so: embeddedvideo.c $(OBJECTS) websites/libwebsites.la
-	$(LIBTOOL) --mode=compile $(CC) $(CFLAGS) -c embeddedvideo.c -o tmp$@.lo $(PLUGIN_CFLAGS)
-	$(LIBTOOL) --mode=link    $(CC) $(CFLAGS) -o libtmp$@.la -rpath $(plugindir) tmp$@.lo $(LIBS) $(LDFLAGS) $(OBJECTS) -module -avoid-version $(PLUGIN_LIBS)
-	@rm -f tmp$@.lo tmp$@.o libtmp$@.la
-	@cp .libs/libtmp$@.so* $@
-	@rm -f .libs/libtmp$@.* .libs/tmp$@.*
-
-all: embeddedvideo.so
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
