@@ -31,7 +31,12 @@ PKG_CHECK_MODULES(PIDGIN, pidgin purple)
 
 if test "$PLUGINDIR" = ""
 then
-    PLUGINDIR="`pkg-config --variable=libdir pidgin`/pidgin"
+    if test "$prefix" = "NONE"
+    then
+        PLUGINDIR="`pkg-config --variable=libdir pidgin`/pidgin"
+    else
+        PLUGINDIR="$prefix/lib/pidgin"
+    fi
 fi
 
 AC_SUBST(PIDGIN_CFLAGS)

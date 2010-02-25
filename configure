@@ -10804,7 +10804,12 @@ fi
 
 if test "$PLUGINDIR" = ""
 then
-    PLUGINDIR="`pkg-config --variable=libdir pidgin`/pidgin"
+    if test "$prefix" = "NONE"
+    then
+        PLUGINDIR="`pkg-config --variable=libdir pidgin`/pidgin"
+    else
+        PLUGINDIR="$prefix/lib/pidgin"
+    fi
 fi
 
 
