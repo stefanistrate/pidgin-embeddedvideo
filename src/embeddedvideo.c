@@ -205,11 +205,11 @@ static PurplePluginInfo info = {
 
     PLUGIN_ID,
     "Pidgin Embedded Video",
-    "1.1",
+    "1.2",
     "Watch videos directly into the conversation.",
     "This plugin provides you an easy way to watch videos from popular websites"
         " (CollegeHumor, Dailymotion, Google Video, Metacafe, MySpace Video,"
-        " Trilulilu, Vimeo, Yahoo! Video and Youtube) directly into the"
+        " Trilulilu, Vimeo, Xfire, Yahoo! Video and Youtube) directly into the"
         " conversation. Send and receive links and the plugin will insert the"
         " video.",
     "Stefan Istrate <stefan.istrate@gmail.com>\n"

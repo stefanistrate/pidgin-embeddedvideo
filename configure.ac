@@ -1,7 +1,7 @@
 # Process this file with autoconf to produce a configure script.
 AC_PREREQ([2.50])
 
-AC_INIT([pidgin-embeddedvideo], [1.1])
+AC_INIT([pidgin-embeddedvideo], [1.2])
 AC_CANONICAL_SYSTEM
 
 AM_INIT_AUTOMAKE
