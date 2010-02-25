@@ -15,7 +15,8 @@ WebsiteInfo trilulilu_video = {
         "<param name=\"movie\" value=\"http://embed.trilulilu.ro/video/%MISC1%/%VIDEO_ID%/0xe9eff4.swf\"></param>"
         "<param name=\"allowFullScreen\" value=\"true\"></param>"
         "<param name=\"allowscriptaccess\" value=\"always\"></param>"
-        "<embed src=\"http://embed.trilulilu.ro/video/%MISC1%/%VIDEO_ID%/0xe9eff4.swf\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"425\" height=\"344\"></embed>"
+        "<param name=\"wmode\" value=\"opaque\"></param>"
+        "<embed src=\"http://embed.trilulilu.ro/video/%MISC1%/%VIDEO_ID%/0xe9eff4.swf\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" wmode=\"opaque\" width=\"425\" height=\"344\"></embed>"
         "</object>",
     &check
 };

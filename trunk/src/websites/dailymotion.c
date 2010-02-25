@@ -7,7 +7,8 @@ WebsiteInfo dailymotion = {
         "<param name=\"movie\" value=\"http://www.dailymotion.com/swf/%VIDEO_ID%\" />"
         "<param name=\"allowFullScreen\" value=\"true\" />"
         "<param name=\"allowScriptAccess\" value=\"always\" />"
-        "<embed src=\"http://www.dailymotion.com/swf/%VIDEO_ID%\" type=\"application/x-shockwave-flash\" width=\"420\" height=\"339\" allowFullScreen=\"true\" allowScriptAccess=\"always\"></embed>"
+        "<param name=\"wmode\" value=\"opaque\" />"
+        "<embed src=\"http://www.dailymotion.com/swf/%VIDEO_ID%\" type=\"application/x-shockwave-flash\" width=\"420\" height=\"339\" allowFullScreen=\"true\" allowScriptAccess=\"always\" wmode=\"opaque\"></embed>"
         "</object>",
     NULL
 };
