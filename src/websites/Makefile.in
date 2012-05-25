@@ -38,10 +38,7 @@ target_triplet = @target@
 subdir = src/websites
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/m4/libtool.m4 \
-	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
-	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
-	$(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(install_sh) -d
@@ -50,8 +47,8 @@ CONFIG_CLEAN_VPATH_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
 libwebsites_la_LIBADD =
 am_libwebsites_la_OBJECTS = libwebsites_la-collegehumor.lo \
-	libwebsites_la-dailymotion.lo libwebsites_la-google-video.lo \
-	libwebsites_la-metacafe.lo libwebsites_la-myspace-video.lo \
+	libwebsites_la-dailymotion.lo libwebsites_la-metacafe.lo \
+	libwebsites_la-myspace-video.lo \
 	libwebsites_la-trilulilu-audio.lo \
 	libwebsites_la-trilulilu-image.lo \
 	libwebsites_la-trilulilu-video.lo libwebsites_la-vimeo.lo \
@@ -211,7 +208,6 @@ noinst_LTLIBRARIES = libwebsites.la
 libwebsites_la_SOURCES = \
     collegehumor.c          \
     dailymotion.c           \
-    google-video.c          \
     metacafe.c              \
     myspace-video.c         \
     trilulilu-audio.c       \
@@ -277,7 +273,6 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwebsites_la-collegehumor.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwebsites_la-dailymotion.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwebsites_la-google-video.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwebsites_la-metacafe.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwebsites_la-myspace-video.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwebsites_la-trilulilu-audio.Plo@am__quote@
@@ -322,13 +317,6 @@ libwebsites_la-dailymotion.lo: dailymotion.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='dailymotion.c' object='libwebsites_la-dailymotion.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libwebsites_la_CFLAGS) $(CFLAGS) -c -o libwebsites_la-dailymotion.lo `test -f 'dailymotion.c' || echo '$(srcdir)/'`dailymotion.c
-
-libwebsites_la-google-video.lo: google-video.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libwebsites_la_CFLAGS) $(CFLAGS) -MT libwebsites_la-google-video.lo -MD -MP -MF $(DEPDIR)/libwebsites_la-google-video.Tpo -c -o libwebsites_la-google-video.lo `test -f 'google-video.c' || echo '$(srcdir)/'`google-video.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libwebsites_la-google-video.Tpo $(DEPDIR)/libwebsites_la-google-video.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='google-video.c' object='libwebsites_la-google-video.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libwebsites_la_CFLAGS) $(CFLAGS) -c -o libwebsites_la-google-video.lo `test -f 'google-video.c' || echo '$(srcdir)/'`google-video.c
 
 libwebsites_la-metacafe.lo: metacafe.c
 @am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libwebsites_la_CFLAGS) $(CFLAGS) -MT libwebsites_la-metacafe.lo -MD -MP -MF $(DEPDIR)/libwebsites_la-metacafe.Tpo -c -o libwebsites_la-metacafe.lo `test -f 'metacafe.c' || echo '$(srcdir)/'`metacafe.c

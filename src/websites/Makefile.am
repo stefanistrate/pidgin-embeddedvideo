@@ -4,7 +4,6 @@ noinst_LTLIBRARIES = libwebsites.la
 libwebsites_la_SOURCES =    \
     collegehumor.c          \
     dailymotion.c           \
-    google-video.c          \
     metacafe.c              \
     myspace-video.c         \
     trilulilu-audio.c       \
