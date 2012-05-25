@@ -2,13 +2,7 @@
 
 WebsiteInfo dailymotion = {
     "dailymotion",
-    "^(?i)(?<http>http://)?(?(<http>)(www\\.)?|(www\\.))dailymotion\\.com/video/(?-i)(?<video_id>[a-zA-Z\\d]+)([_/\\?#].*)?$",
-    "<object width=\"420\" height=\"339\">"
-        "<param name=\"movie\" value=\"http://www.dailymotion.com/swf/%VIDEO_ID%\" />"
-        "<param name=\"allowFullScreen\" value=\"true\" />"
-        "<param name=\"allowScriptAccess\" value=\"always\" />"
-        "<param name=\"wmode\" value=\"opaque\" />"
-        "<embed src=\"http://www.dailymotion.com/swf/%VIDEO_ID%\" type=\"application/x-shockwave-flash\" width=\"420\" height=\"339\" allowFullScreen=\"true\" allowScriptAccess=\"always\" wmode=\"opaque\"></embed>"
-        "</object>",
+    "^(?i)(https?://)?(\\w+\\.)?dailymotion\\.com/video/(?-i)(?<video_id>[a-zA-Z0-9]+)(?i)([^a-z0-9].*)?$",
+    "<iframe frameborder=\"0\" width=\"425\" height=\"240\" src=\"http://www.dailymotion.com/embed/video/%VIDEO_ID%\" webkitAllowFullScreen allowFullScreen></iframe>",
     NULL
 };
