@@ -212,7 +212,7 @@ static PurplePluginInfo info = {
         " Trilulilu, Vimeo, Xfire, Yahoo! Video and Youtube) directly into the"
         " conversation. Send and receive links and the plugin will insert the"
         " video.",
-    "Stefan Istrate <stefan.istrate@gmail.com>\n"
+    "Ștefan Istrate <stefan.istrate@gmail.com>\n"
         "Marius Stroe <laurentiu.stroe@gmail.com>",
     "http://code.google.com/p/pidgin-embeddedvideo/",
 
