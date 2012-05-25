@@ -190,6 +190,7 @@ static gboolean new_window_policy_decision_requested_cb(WebKitWebView *web_view,
 {
     const gchar *uri = webkit_network_request_get_uri(request);
     purple_notify_uri(NULL, uri);
+    webkit_web_policy_decision_use(policy_decision);
     return TRUE;
 }
 
@@ -199,7 +200,7 @@ static gboolean navigation_policy_decision_requested_cb(WebKitWebView *web_view,
         gpointer user_data)
 {
     const gchar *uri = webkit_network_request_get_uri(request);
-    purple_notify_uri(NULL, uri);
+    webkit_web_policy_decision_use(policy_decision);
     return TRUE;
 }
 
@@ -252,11 +253,15 @@ videoframes_generate_page(WebsiteInfo *website, GString *url)
         }
     }
 
+    const gchar *header = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 "
+        "Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n<html>\n"
+        "<head></head>\n<body>\n";
+    const gchar *footer = "\n</body>\n</html>";
     gchar *filename;
     gint file = g_file_open_tmp(NULL, &filename, NULL);
-    ssize_t tmp = write(file, "<html>\n<head></head>\n<body>\n", 28);
+    ssize_t tmp = write(file, header, strlen(header));
     tmp = write(file, embed, strlen(embed));
-    tmp = write(file, "\n</body>\n</html>", 16);
+    tmp = write(file, footer, strlen(footer));
     close(file);
 
     purple_debug_info(PLUGIN_ID, "New video found: site = %s, id = %s.\n",
@@ -274,8 +279,8 @@ videoframes_generate_page(WebsiteInfo *website, GString *url)
     g_match_info_free(match_info);
     g_regex_unref(website_regex);
 
-    gchar *ret = g_new(gchar, strlen(filename) + 9);
-    g_stpcpy(g_stpcpy(ret, "file:///"), filename);
+    gchar *ret = g_new(gchar, strlen(filename) + 8);
+    g_stpcpy(g_stpcpy(ret, "file://"), filename);
     g_free(filename);
 
     return ret;

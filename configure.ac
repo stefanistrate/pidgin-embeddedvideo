@@ -3,6 +3,7 @@ AC_PREREQ([2.50])
 
 AC_INIT([pidgin-embeddedvideo], [1.2])
 AC_CANONICAL_SYSTEM
+AC_CONFIG_MACRO_DIR([m4])
 
 AM_INIT_AUTOMAKE
 
