@@ -2,10 +2,7 @@
 
 WebsiteInfo xfire = {
     "xfire",
-    "^(?i)(?<http>http://)?(?(<http>)(www\\.)?|(www\\.))xfire\\.com/video/(?<video_id>[\\w\\d]+)([/\\?#].*)?$",
-    "<object width=\"425\" height=\"344\">"
-        "<param name=\"wmode\" value=\"opaque\" />"
-        "<embed src=\"http://media.xfire.com/swf/embedplayer.swf\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" wmode=\"opaque\" width=\"425\" height=\"344\" flashvars=\"videoid=%VIDEO_ID%\"></embed>"
-        "</object>",
+    "^(?i)(https?://)?(\\w+\\.)?xfire\\.com/videos/(?<video_id>[\\w\\d]+)([^\\w\\d].*)?$",
+    "<iframe src=\"http://beta.xfire.com/videos/%VIDEO_ID%/embed\" width=\"425\" height=\"266\" frameborder=\"0\"></iframe>",
     NULL
 };
