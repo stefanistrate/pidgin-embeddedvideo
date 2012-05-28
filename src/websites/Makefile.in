@@ -52,8 +52,7 @@ am_libwebsites_la_OBJECTS = libwebsites_la-collegehumor.lo \
 	libwebsites_la-trilulilu-audio.lo \
 	libwebsites_la-trilulilu-image.lo \
 	libwebsites_la-trilulilu-video.lo libwebsites_la-vimeo.lo \
-	libwebsites_la-xfire.lo libwebsites_la-yahoo-video.lo \
-	libwebsites_la-youtube.lo
+	libwebsites_la-xfire.lo libwebsites_la-youtube.lo
 libwebsites_la_OBJECTS = $(am_libwebsites_la_OBJECTS)
 libwebsites_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(libwebsites_la_CFLAGS) \
@@ -215,7 +214,6 @@ libwebsites_la_SOURCES = \
     trilulilu-video.c       \
     vimeo.c                 \
     xfire.c                 \
-    yahoo-video.c           \
     youtube.c
 
 libwebsites_la_CFLAGS = $(PLUGIN_CFLAGS) -I..
@@ -280,7 +278,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwebsites_la-trilulilu-video.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwebsites_la-vimeo.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwebsites_la-xfire.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwebsites_la-yahoo-video.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwebsites_la-youtube.Plo@am__quote@
 
 .c.o:
@@ -366,13 +363,6 @@ libwebsites_la-xfire.lo: xfire.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfire.c' object='libwebsites_la-xfire.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libwebsites_la_CFLAGS) $(CFLAGS) -c -o libwebsites_la-xfire.lo `test -f 'xfire.c' || echo '$(srcdir)/'`xfire.c
-
-libwebsites_la-yahoo-video.lo: yahoo-video.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libwebsites_la_CFLAGS) $(CFLAGS) -MT libwebsites_la-yahoo-video.lo -MD -MP -MF $(DEPDIR)/libwebsites_la-yahoo-video.Tpo -c -o libwebsites_la-yahoo-video.lo `test -f 'yahoo-video.c' || echo '$(srcdir)/'`yahoo-video.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libwebsites_la-yahoo-video.Tpo $(DEPDIR)/libwebsites_la-yahoo-video.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='yahoo-video.c' object='libwebsites_la-yahoo-video.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libwebsites_la_CFLAGS) $(CFLAGS) -c -o libwebsites_la-yahoo-video.lo `test -f 'yahoo-video.c' || echo '$(srcdir)/'`yahoo-video.c
 
 libwebsites_la-youtube.lo: youtube.c
 @am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libwebsites_la_CFLAGS) $(CFLAGS) -MT libwebsites_la-youtube.lo -MD -MP -MF $(DEPDIR)/libwebsites_la-youtube.Tpo -c -o libwebsites_la-youtube.lo `test -f 'youtube.c' || echo '$(srcdir)/'`youtube.c
