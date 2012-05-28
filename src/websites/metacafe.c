@@ -2,7 +2,7 @@
 
 WebsiteInfo metacafe = {
     "metacafe",
-    "^(?i)(?<http>http://)?(?(<http>)(www\\.)?|(www\\.))metacafe\\.com/watch/(?-i)(?<video_id>\\d+)/(?<misc1>[\\w\\d]+)([/\\?#].*)?$",
-    "<embed src=\"http://www.metacafe.com/fplayer/%VIDEO_ID%/%MISC1%.swf\" width=\"400\" height=\"345\" wmode=\"opaque\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" allowFullScreen=\"true\" allowScriptAccess=\"always\" name=\"Metacafe_%VIDEO_ID%\"></embed>",
+    "^(?i)(https?://)?(\\w+\\.)?metacafe\\.com/watch/(?-i)(?<video_id>[\\w\\d-]+)/(?<misc1>[\\w\\d-]+)(?i)([^\\w\\d-].*)?$",
+    "<embed flashVars=\"playerVars=autoPlay=no\" src=\"http://www.metacafe.com/fplayer/%VIDEO_ID%/%MISC1%.swf\" width=\"425\" height=\"240\" wmode=\"opaque\" allowFullScreen=\"true\" allowScriptAccess=\"always\" name=\"Metacafe_%VIDEO_ID%\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\"></embed>",
     NULL
 };
