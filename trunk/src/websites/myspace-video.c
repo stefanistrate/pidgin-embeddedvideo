@@ -2,7 +2,7 @@
 
 WebsiteInfo myspace_video = {
     "myspace-video",
-    "^(?i)(http://)?(((vids)|(music)|(www))\\.)?myspace\\.com/index\\.cfm\\?fuseaction=vids\\.individual&videoid=(?<video_id>\\d+)([&#].*)?$",
+    "^(?i)(https?://)?(\\w+\\.)?myspace\\.com/video/.*/(?<video_id>\\d+)([^\\w\\d][^/]*)?$",
     "<object width=\"425px\" height=\"360px\">"
         "<param name=\"allowFullScreen\" value=\"true\"/>"
         "<param name=\"wmode\" value=\"opaque\"/>"
