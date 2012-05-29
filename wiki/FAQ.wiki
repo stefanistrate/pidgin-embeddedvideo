@@ -7,7 +7,7 @@ Pidgin Embedded Video is the first plugin we have written. It all began in the s
 
 We are open to new ideas and ready to get things better! Whether you have an idea of improving this project or something new and you think we can help you, feel free to contact us!
 
-=== What magic libraries uses your plugin to play the video? ==
+=== What magic libraries does your plugin use to play the video? ==
 
 There is nothing totally unusual. We are using [http://live.gnome.org/WebKitGtk WebKit/GTK+]. We like it because there is an increasing interest in its development.
 
