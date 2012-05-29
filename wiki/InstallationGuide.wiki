@@ -43,7 +43,6 @@ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 2D9A3C5B
 }}}
   * Open _System > Administration > Software Sources_.
   * Click on the _Third-Party Software_ tab.
-https://launchpad.net/+help/soyuz/images/software-sources-3rdparty-tab.png
   * Click on the _Add_ button.
   * Paste the line below and click on the _Add Source_ button.
 {{{
