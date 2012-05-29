@@ -19,7 +19,6 @@ websites_init()
                         trilulilu_image,
                         trilulilu_video,
                         vimeo,
-                        xfire,
                         youtube,
                         youtube_short;
 
@@ -33,7 +32,6 @@ websites_init()
     list = g_list_append(list, &trilulilu_image);
     list = g_list_append(list, &trilulilu_video);
     list = g_list_append(list, &vimeo);
-    list = g_list_append(list, &xfire);
     list = g_list_append(list, &youtube);
     list = g_list_append(list, &youtube_short);
 }

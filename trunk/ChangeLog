@@ -1,9 +1,14 @@
 Pidgin Embedded Video:
 The easiest way to watch videos while chatting with your friends.
 
-version 1.2 (TODO/TODO/2010):
-	* Added support for Xfire.
+version 1.2 (28/05/2012):
+	* Added support for Youtube short URLs.
+	* Removed support for Google Video (service not available any more)
+	  and Yahoo! Video (service inconsistent when generating the embedding
+	  code).
+	* Updated regexes and embedding codes for all websites.
 	* Solved a few bugs.
+	* Updated license from GPLv2 to GPLv3
 
 version 1.1 (11/09/2009):
 	* Completely changed the structure of the plugin and the compilation
