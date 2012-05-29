@@ -20,7 +20,8 @@ websites_init()
                         trilulilu_video,
                         vimeo,
                         xfire,
-                        youtube;
+                        youtube,
+                        youtube_short;
 
     /* Initialize the websites list. */
     list = NULL;
@@ -34,6 +35,7 @@ websites_init()
     list = g_list_append(list, &vimeo);
     list = g_list_append(list, &xfire);
     list = g_list_append(list, &youtube);
+    list = g_list_append(list, &youtube_short);
 }
 
 void

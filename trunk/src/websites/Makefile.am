@@ -11,6 +11,7 @@ libwebsites_la_SOURCES =    \
     trilulilu-video.c       \
     vimeo.c                 \
     xfire.c                 \
-    youtube.c
+    youtube.c               \
+    youtube-short.c
 libwebsites_la_CFLAGS = $(PLUGIN_CFLAGS) -I..
 
