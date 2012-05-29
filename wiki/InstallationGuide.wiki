@@ -32,7 +32,7 @@ You will need these packages to be installed before compiling the plugin on your
 
 On Ubuntu Karmic you may type the following in a terminal to install the dependencies...
 {{{
-sudo apt-get install pidgin-dev libglib2.0-dev libcurl3-dev libwebkitgtk-dev
+sudo apt-get install pidgin-dev libglib2.0-dev libcurl3-dev libwebkit-dev
 }}}
 
 On other Ubuntu versions, if you don't see the right version of the libwebkit-dev package in the repositories, you can find it [https://launchpad.net/~webkit-team/+archive/ppa here]. This page will tell you how to install it on your machine in just a few steps:
