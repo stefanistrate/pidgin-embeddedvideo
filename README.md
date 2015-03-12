@@ -1,11 +1,10 @@
 # Pidgin Embedded Video
-================================================================================
 
-_(Currently unmaintained due to lack of time. Imported from http://code.google.com/p/pidgin-embeddedvideo/)_
+_(Currently unmaintained due to lack of time.)_
 
 Pidgin Embedded Video is a GTK plugin for the popular instant messaging client [Pidgin](http://pidgin.im/). The purpose of this plugin is to provide a faster way to watch videos while chatting with your friends. No more additional browser windows! It transforms a simple conversation into a much more attractive and interesting experience. Sharing links to videos and watching them was never such a pleasant activity in Pidgin. Take a quick look!
 
-![Vimeo](/screenshots/vimeo-small.png) ![Youtube](/screenshots/youtube-small.png) ![Trilulilu](/screenshots/trilulilu-small.png) ![Configuration](/screenshots/configuration-small.png)
+[![Vimeo](/screenshots/vimeo-small.png)](/screenshots/vimeo.png) ![Youtube](/screenshots/youtube-small.png) ![Trilulilu](/screenshots/trilulilu-small.png) ![Configuration](/screenshots/configuration-small.png)
 
 _(Click to view full size images)_
 
