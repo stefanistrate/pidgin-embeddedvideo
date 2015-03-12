@@ -12,7 +12,7 @@ There is nothing totally unusual. We are using [http://live.gnome.org/WebKitGtk 
 
 === Why doesn't your plugin detect a video link I've just received? ===
 
-Did you check if the site is currently supported? If it is, we could have a bug in our implementation. Please tell us about it by opening [http://code.google.com/p/pidgin-embeddedvideo/issues/list a new issue].
+Did you check if the site is currently supported? If it is, we could have a bug in our implementation. Please tell us about it by opening [a new issue](https://github.com/stefanistrate/pidgin-embeddedvideo/issues).
 
 === Why am I seeing a big white space instead of a video? ===
 
@@ -20,8 +20,8 @@ The most common cause of this is that you don't have Adobe Flash Player installe
 
 === How do I set the videos to be hidden by default? ===
 
-Go to the "[http://code.google.com/p/pidgin-embeddedvideo/wiki/Screenshots#Configuration Configure Plugin]" menu and deselect the "Show every video instantly" option. Thereby, videos will be hidden by default. You can watch them by clicking on the toggle button (the little arrow).
+Go to the ["Configure Plugin"](/screenshots/configuration.png) menu and deselect the _"Show every video instantly"_ option. Thereby, videos will be hidden by default. You can watch them by clicking on the toggle button (the little arrow).
 
 === I want support for a new video site. What can I do? ===
 
-If you want a new video site which is not supported, please feel free to ask for it by opening [http://code.google.com/p/pidgin-embeddedvideo/issues/list a new issue].
+If you want a new video site which is not supported, please feel free to ask for it by opening [a new issue](https://github.com/stefanistrate/pidgin-embeddedvideo/issues).
