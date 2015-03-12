@@ -4,17 +4,15 @@ _(Currently unmaintained due to lack of time.)_
 
 Pidgin Embedded Video is a GTK plugin for the popular instant messaging client [Pidgin](http://pidgin.im/). The purpose of this plugin is to provide a faster way to watch videos while chatting with your friends. No more additional browser windows! It transforms a simple conversation into a much more attractive and interesting experience. Sharing links to videos and watching them was never such a pleasant activity in Pidgin. Take a quick look!
 
-[![Vimeo](/screenshots/vimeo-small.png)](/screenshots/vimeo.png) ![Youtube](/screenshots/youtube-small.png) ![Trilulilu](/screenshots/trilulilu-small.png) ![Configuration](/screenshots/configuration-small.png)
-
-_(Click to view full size images)_
+[![Vimeo](/screenshots/vimeo-small.png)](/screenshots/vimeo.png) [![Youtube](/screenshots/youtube-small.png)](/screenshots/youtube.png) [![Trilulilu](/screenshots/trilulilu-small.png)](/screenshots/trilulilu.png) [![Configuration](/screenshots/configuration-small.png)](/screenshots/configuration.png)
 
 ## Features
 
-  * The plugin automatically inserts the video pointed to into the conversation when an appropriate link is sent or received.
+  * The plugin automatically inserts the video into the conversation when an appropriate link is sent or received.
   * Every video has a toggle button which allows you to show or hide the video.
-  * The default behaviour for a new video link is customizable from the "[http://code.google.com/p/pidgin-embeddedvideo/wiki/Screenshots#Configuration Configure Plugin]" menu. You can choose whether to show the video instantly or to hide it by default.
+  * The default behaviour for a new video link is customizable from the ["Configure Plugin"](/screenshots/configuration.png) menu. You can choose whether to show the video instantly or to hide it by default.
   * Supported video sites are [CollegeHumor](http://www.collegehumor.com), [Dailymotion](http://www.dailymotion.com), [Metacafe](http://www.metacafe.com), [MySpace Video](http://vids.myspace.com), [Trilulilu](http://www.trilulilu.ro) (all the stuff: [audio](http://www.trilulilu.ro/audio), [images](http://www.trilulilu.ro/imagini) and [video](http://www.trilulilu.ro/video)), [Vimeo](http://www.vimeo.com) and [Youtube](http://www.youtube.com).
-  * It works with the Ubuntu version of Pidgin. It should work on every Linux distribution as far as the [InstallationGuide#Requirements requirements] are met.
+  * It works with the Ubuntu version of Pidgin. It should work on every Linux distribution as far as the [requirements](/InstallationGuide.md#Requirements) are met.
 
 ## Upcoming Features
 
@@ -22,7 +20,7 @@ We think a Windows version of this plugin would be great for many people too. We
 
 ## How to install
 
-First, download the appropriate version from the [http://code.google.com/p/pidgin-embeddedvideo/downloads/list Downloads] page. Then, follow the steps from the [Installation Guide](/InstallationGuide.md).
+First, download the appropriate version from the [downloads](/downloads) folder. Then, follow the steps from the [Installation Guide](/InstallationGuide.md).
 
 ## Feedback
 
