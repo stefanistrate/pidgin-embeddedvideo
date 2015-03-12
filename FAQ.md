@@ -20,7 +20,7 @@ The most common cause of this is that you don't have Adobe Flash Player installe
 
 ### How do I set the videos to be hidden by default?
 
-Go to the ["Configure Plugin"](/screenshots/configuration.png) menu and deselect the _"Show every video instantly"_ option. Thereby, videos will be hidden by default. You can watch them by clicking on the toggle button (the little arrow).
+Go to the [_"Configure Plugin"_](/screenshots/configuration.png) menu and deselect the _"Show every video instantly"_ option. Thereby, videos will be hidden by default. You can watch them by clicking on the toggle button (the little arrow).
 
 ### I want support for a new video site. What can I do?
 
