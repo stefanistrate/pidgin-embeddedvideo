@@ -2,7 +2,7 @@
 
 We have tried to keep it as simple as possible. So here it is!
 
-First of all, be sure that you have downloaded and installed [http://pidgin.im Pidgin] and [http://get.adobe.com/flashplayer/ Adobe Flash Player].
+First of all, be sure that you have downloaded and installed [Pidgin](http://pidgin.im) and [Adobe Flash Player](http://get.adobe.com/flashplayer/).
 
 ## Installation from package
 
