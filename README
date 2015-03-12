@@ -1,2 +1,40 @@
-Find everything about this plugin on the project's site:
-http://code.google.com/p/pidgin-embeddedvideo/
+= Pidgin Embedded Video =
+
+=== _(Due to lack of time, this plugin is currently unmaintained.)_ ===
+=== _(Project moved from http://code.google.com/p/pidgin-embeddedvideo/)_ ===
+
+Pidgin Embedded Video is a GTK plugin for the popular instant messaging client [http://pidgin.im/ Pidgin]. The purpose of this plugin is to provide a faster way to watch videos while chatting with your friends. No more additional browser windows! It transforms a simple conversation into a much more attractive and interesting experience. Sharing links to videos and watching them was never such a pleasant activity in Pidgin. Take a quick look!
+
+[http://code.google.com/p/pidgin-embeddedvideo/wiki/Screenshots#Vimeo http://pidgin-embeddedvideo.googlecode.com/svn/wiki/screenshots/vimeo-small.png] [http://code.google.com/p/pidgin-embeddedvideo/wiki/Screenshots#Youtube http://pidgin-embeddedvideo.googlecode.com/svn/wiki/screenshots/youtube-small.png] [http://code.google.com/p/pidgin-embeddedvideo/wiki/Screenshots#Trilulilu http://pidgin-embeddedvideo.googlecode.com/svn/wiki/screenshots/trilulilu-small.png] [http://code.google.com/p/pidgin-embeddedvideo/wiki/Screenshots#Configuration http://pidgin-embeddedvideo.googlecode.com/svn/wiki/screenshots/configuration-small.png]
+
+_(Click to view full size images)_
+
+== Features ==
+
+  * The plugin automatically inserts the video pointed to into the conversation when an appropriate link is sent or received.
+  * Every video has a toggle button which allows you to show or hide the video.
+  * The default behaviour for a new video link is customizable from the "[http://code.google.com/p/pidgin-embeddedvideo/wiki/Screenshots#Configuration Configure Plugin]" menu. You can choose whether to show the video instantly or to hide it by default.
+  * Supported video sites are [http://www.collegehumor.com CollegeHumor], [http://www.dailymotion.com Dailymotion], [http://www.metacafe.com Metacafe], [http://vids.myspace.com MySpace Video], [http://www.trilulilu.ro Trilulilu] (all the stuff: [http://www.trilulilu.ro/audio audio], [http://www.trilulilu.ro/imagini images] and [http://www.trilulilu.ro/video video]), [http://www.vimeo.com Vimeo] and [http://www.youtube.com Youtube].
+  * It works with the Ubuntu version of Pidgin. It should work on every Linux distribution as far as the [InstallationGuide#Requirements requirements] are met.
+
+=== Upcoming Features ===
+
+We think a Windows version of this plugin would be great for many people too. We are trying to do this for some time but we faced some compilation problems. If you are enthusiastic about this project and you want to help us to move forward, feel free to contact us.
+
+== How to install ==
+
+First, download the appropriate version from the [http://code.google.com/p/pidgin-embeddedvideo/downloads/list Downloads] page. Then, follow the steps from the [InstallationGuide Installation Guide].
+
+== Feedback ==
+
+Do you like this plugin? You find it useful or you don't like it at all? Feel free to tell us your impressions. Give us your advice, suggestions or ideas for improving this project. Don't hesitate to contact us. We are [mailto:stefan.istrate@gmail.com Ștefan] and [mailto:laurentiu.stroe@gmail.com Marius].
+
+Did you find any bug? Please report it by opening a new issue under the [http://code.google.com/p/pidgin-embeddedvideo/issues/list Issues] tab. Your observations could help many other people.
+
+Also, please note that we have a [FAQ F.A.Q. (Frequently Asked Questions)] for the most common questions. Take a look on it, maybe you will find the answer you need quicker than we write you back.
+
+=== Want to reward our work? ===
+
+Here's the magic button:
+
+[https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FGNMPEU8GSQEE&lc=RO&item_name=pidgin%2dembeddedvideo&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif]
