@@ -60,7 +60,7 @@ make
 make install
 ```
 
-Restart Pidgin, activate Pidgin Embedded Video under the "Plugins" menu and have fun! ;)
+Restart Pidgin, activate Pidgin Embedded Video under the _"Plugins"_ menu and have fun! ;)
 
 As a side note, you can uninstall the plugin with...
 ```
