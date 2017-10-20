@@ -1,1 +1,1 @@
-#define PLUGIN_ID "gtk-stef2n_mariusl-embeddedvideo"
+#define PLUGIN_ID "gtk-stefan_marius-embeddedvideo"
