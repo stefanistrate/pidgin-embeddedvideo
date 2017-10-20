@@ -4,20 +4,6 @@ We have tried to keep it as simple as possible. So here it is!
 
 First of all, be sure that you have downloaded and installed [Pidgin](http://pidgin.im) and [Adobe Flash Player](http://get.adobe.com/flashplayer/).
 
-## Installation from package
-
-Download the `.deb` package for Ubuntu and install it with:
-```
-sudo dpkg -i pidgin-embeddedvideo_1.2-1_arch.deb
-```
-where `arch` is either `i386` or `amd64`, depending on your distribution.
-
-If you want to uninstall the plugin, run
-```
-sudo apt-get remove pidgin-embeddedvideo
-```
-or use Synaptic Package Manager to remove the `pidgin-embeddedvideo` package.
-
 ## Installation from source code
 
 ### Requirements

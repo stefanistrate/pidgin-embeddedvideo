@@ -20,7 +20,7 @@ We think a Windows version of this plugin would be great for many people too. We
 
 ## How to install
 
-First, download the appropriate version from the [downloads](/downloads) folder. Then, follow the steps from the [Installation Guide](/InstallationGuide.md).
+Download the latest release and follow the steps from the [Installation Guide](/InstallationGuide.md).
 
 ## Feedback
 
