@@ -1,4 +1,4 @@
-# A brief description of how to install the plugin.
+# Installation Guide
 
 We have tried to keep it as simple as possible. So here it is!
 
